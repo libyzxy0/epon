@@ -31,7 +31,7 @@ export default function AppTitle() {
         color: colors.primary[400],
         fontSize: 23,
         fontFamily: 'PoppinsBold',
-      }}>Epon</Text>
+      }}>Epon 💵</Text>
       <View style={ {
         height: 4,
         width: 40,

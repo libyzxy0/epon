@@ -3,10 +3,38 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import React from "react";
 import { Calendar } from "react-native-calendars";
+import { useState } from "react";
+
+type CalendarDateType = {
+  dateString: string;
+  year: string;
+  month: string;
+  day: string;
+  timestamp: string;
+}
 
 export function CalendarTracker() {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
+    const [date, setDate] = useState<CalendarDateType | null>(null);
+
+    const datesData = {
+        "2025-05-01": {
+            marked: false,
+            selected: true,
+            selectedColor: colors.secondary[300]
+        },
+        "2025-05-02": {
+            marked: false,
+            selected: true,
+            selectedColor: colors.secondary[300]
+        },
+        "2025-05-03": {
+            marked: false,
+            selected: true,
+            selectedColor: colors.primary[300]
+        }
+    };
 
     return (
         <View
@@ -19,7 +47,7 @@ export function CalendarTracker() {
             }}
         >
             <View
-            transparent
+                transparent
                 style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
@@ -36,14 +64,19 @@ export function CalendarTracker() {
                         paddingTop: 3
                     }}
                 >
-                    {new Date().toLocaleString("default", {
-                        month: "long",
-                        year: "numeric"
-                    })}
+                    {date
+                        ? new Date(date.timestamp).toLocaleString("default", {
+                              month: "long",
+                              year: "numeric"
+                          })
+                        : new Date().toLocaleString("default", {
+                              month: "long",
+                              year: "numeric"
+                          })}
                 </Text>
 
                 <View
-                transparent
+                    transparent
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
@@ -51,7 +84,7 @@ export function CalendarTracker() {
                     }}
                 >
                     <View
-                    transparent
+                        transparent
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
@@ -77,7 +110,7 @@ export function CalendarTracker() {
                     </View>
 
                     <View
-                    transparent
+                        transparent
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
@@ -98,13 +131,15 @@ export function CalendarTracker() {
                                 paddingTop: 2.5
                             }}
                         >
-                           Void ✗
+                            Void ✗
                         </Text>
                     </View>
                 </View>
             </View>
 
             <Calendar
+                onMonthChange={setDate}
+                monthFormat={"MMMM, yyyy"}
                 hideArrows={true}
                 renderHeader={() => null}
                 theme={{
@@ -118,23 +153,7 @@ export function CalendarTracker() {
                     dayTextColor: colors.secondary[800],
                     textDisabledColor: colors.secondary[400]
                 }}
-                markedDates={{
-                    "2025-05-15": {
-                        selected: true,
-                        marked: true,
-                        selectedColor: colors.secondary[300]
-                    },
-                    "2025-05-13": {
-                        selected: true,
-                        marked: true,
-                        selectedColor: colors.secondary[300]
-                    },
-                    "2025-05-04": {
-                        marked: false,
-                        selected: true,
-                        selectedColor: colors.primary[300]
-                    }
-                }}
+                markedDates={datesData}
             />
         </View>
     );

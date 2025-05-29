@@ -6,12 +6,12 @@ import { Calendar } from "react-native-calendars";
 import { useState } from "react";
 
 type CalendarDateType = {
-  dateString: string;
-  year: string;
-  month: string;
-  day: string;
-  timestamp: string;
-}
+    dateString: string;
+    year: string;
+    month: string;
+    day: string;
+    timestamp: string;
+};
 
 export function CalendarTracker() {
     const theme = useColorScheme() ?? "light";
@@ -136,25 +136,26 @@ export function CalendarTracker() {
                     </View>
                 </View>
             </View>
-
-            <Calendar
-                onMonthChange={setDate}
-                monthFormat={"MMMM, yyyy"}
-                hideArrows={true}
-                renderHeader={() => null}
-                theme={{
-                    monthTextColor: colors.text,
-                    backgroundColor: colors.secondary[50],
-                    calendarBackground: colors.secondary[50],
-                    textSectionTitleColor: colors.primary[400],
-                    selectedDayBackgroundColor: colors.secondary[50],
-                    selectedDayTextColor: colors.text,
-                    todayTextColor: colors.primary[400],
-                    dayTextColor: colors.secondary[800],
-                    textDisabledColor: colors.secondary[400]
-                }}
-                markedDates={datesData}
-            />
+            <View key={theme}>
+                <Calendar
+                    onMonthChange={setDate}
+                    monthFormat={"MMMM, yyyy"}
+                    hideArrows={true}
+                    renderHeader={() => null}
+                    theme={{
+                        monthTextColor: colors.text,
+                        backgroundColor: colors.secondary[50],
+                        calendarBackground: colors.secondary[50],
+                        textSectionTitleColor: colors.primary[400],
+                        selectedDayBackgroundColor: colors.secondary[50],
+                        selectedDayTextColor: colors.text,
+                        todayTextColor: colors.primary[400],
+                        dayTextColor: colors.secondary[800],
+                        textDisabledColor: colors.secondary[400]
+                    }}
+                    markedDates={datesData}
+                />
+            </View>
         </View>
     );
 }

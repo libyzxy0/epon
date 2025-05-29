@@ -19,7 +19,6 @@ export function useCoinActions() {
         const newAmount = coins + amount;
         const now = () => new Date().toLocaleString('sv-SE').replace(' ', 'T') + '.' + String(new Date().getMilliseconds()).padStart(3, '0');
 
-
         if (typeof amount == "number") {
             await db.runAsync(
                 `UPDATE coins SET amount = ?, last_update = ?`,

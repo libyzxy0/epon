@@ -8,11 +8,11 @@ import {
 import Colors from "@/constants/Colors";
 import { Pressable, Alert } from 'react-native'
 import { useCoinStore } from '@/store/useCoinStore'
-
+import { useSQLiteContext } from "expo-sqlite";
 export function CoinStatus() {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
-  const {coins, currency} = useCoinStore();
+  const { coins, currency } = useCoinStore();
     return (
         <View
             style={{
@@ -42,7 +42,7 @@ export function CoinStatus() {
                         color: colors.primary[400]
                     }}
                 >
-                    {coins !== null ? `PHP ${coins}` : "Loading..."}
+                    {coins !== null ? `${currency} ${coins.toLocaleString('en-US')}` : "Loading..."}
                 </Text>
             </View>
 

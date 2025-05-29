@@ -2,7 +2,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Text, View } from "@/components/Themed";
 import { Pressable, Alert } from "react-native";
-import { useCoinStore } from "@/store/useCoinStore";
+import { useCoinActions } from "@/hooks/useCoinsActions";
 import { SaveMoneyModal } from "@/components/SaveMoneyModal";
 import { useState } from 'react'
 
@@ -16,7 +16,7 @@ type CoinButtonType = {
 export function SaveCoin() {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
-    const { saveCoin } = useCoinStore();
+    const { saveCoin } = useCoinActions();
     const [coinModal, setCoinModal] = useState({
         visisble: false,
         amount: 0,
@@ -31,7 +31,7 @@ export function SaveCoin() {
         });
     };
     
-    const handleModalConfirm = (inputAmount: number | null) => {
+    const handleModalConfirm = async (inputAmount: number | null) => {
       if(coinModal.isCustom && inputAmount) {
         saveCoin(inputAmount)
       } else {

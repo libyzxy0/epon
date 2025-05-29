@@ -4,12 +4,14 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { useEffect, useState } from "react";
 import Colors from "@/constants/Colors";
 import { useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
+import { useCoinStore } from '@/store/useCoinStore'
 
 export default function About() {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
     const db = useSQLiteContext();
-
+    const {coins} = useCoinStore();
+    
     const [version, setVersion] = useState("");
     const [data, setData] = useState();
     useEffect(() => {
@@ -18,10 +20,8 @@ export default function About() {
                 "sqlite_version()": string;
             }>("SELECT sqlite_version()");
             setVersion(result["sqlite_version()"]);
-            const allRows = await db.getAllAsync("SELECT * FROM coins");
-            const coin = await db.getFirstAsync("SELECT * FROM coins;");
-            console.log(coin);
-            setData(coin);
+            const allRows = await db.getAllAsync('SELECT * FROM coins;');
+            setData(allRows)
         }
         setup();
     }, []);
@@ -53,6 +53,7 @@ export default function About() {
             >
                 {"Version: " + version}
                 {"\nData:" + JSON.stringify(data)}
+                {"\nCoins:" + coins}
             </Text>
 
             <Pressable

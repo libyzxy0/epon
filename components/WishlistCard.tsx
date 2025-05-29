@@ -2,10 +2,13 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Text, View } from "@/components/Themed";
 import { Pressable } from "react-native";
+import { useCoinStore } from "@/store/useCoinStore";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export function WishlistCard({
     id,
     name,
+    description,
     price,
     progress,
     color,
@@ -13,6 +16,7 @@ export function WishlistCard({
 }: {
     id: string;
     name: string;
+    description: string;
     price: number;
     progress: number;
     color: "blue" | "yellow" | "red" | "primary";
@@ -20,8 +24,9 @@ export function WishlistCard({
 }) {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
+    const { short_currency } = useCoinStore();
     return (
-        <Pressable onPress={() => onPress(id)}>
+        <Pressable onLongPress={() => onPress(id)}>
             <View
                 style={{
                     backgroundColor: colors.secondary[50],
@@ -35,27 +40,72 @@ export function WishlistCard({
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "space-between"
+                        justifyContent: "space-between",
+                        paddingTop: 5
                     }}
                 >
                     <Text
                         style={{
-                            color: colors[color][400],
+                            color: colors[color][300],
                             fontFamily: "PoppinsBold",
-                            fontSize: 20
+                            fontSize: 16
                         }}
                     >
                         {name}
                     </Text>
+
+                    <Text
+                        style={{
+                            paddingTop: 1,
+                            color: colors.primary[500],
+                            fontFamily: "PoppinsBold"
+                        }}
+                    >
+                        {short_currency}
+                        {price.toLocaleString("en-US")}
+                    </Text>
+                </View>
+                <Text
+                    style={{
+                        color: colors.secondary[500],
+                        marginVertical: 7
+                    }}
+                >
+                    {description}
+                </Text>
+                <View
+                    transparent
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between"
+                    }}
+                >
+                    <View transparent style={{
+                      flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 5
+                    }}>
+                        <Ionicons name="calendar-outline" size={15} color={colors.secondary[400]} />
+                        <Text
+                            style={{
+                                color: colors.secondary[400],
+                                fontSize: 12,
+                                paddingTop: 2
+                            }}
+                        >
+                            March 2024
+                        </Text>
+                    </View>
                     <Text
                         style={{
                             color: colors[color][300],
-                            fontFamily: "PoppinsBold",
-                            fontSize: 20,
-                            marginTop: 2
+                            marginTop: 2,
+                            fontSize: 12
                         }}
                     >
-                        ₱{price}
+                        {progress + "%"}
                     </Text>
                 </View>
                 <View

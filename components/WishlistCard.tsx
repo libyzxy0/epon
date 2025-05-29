@@ -12,6 +12,7 @@ export function WishlistCard({
     price,
     progress,
     color,
+    created_at,
     onPress
 }: {
     id: string;
@@ -19,6 +20,7 @@ export function WishlistCard({
     description: string;
     price: number;
     progress: number;
+    created_at: string;
     color: "blue" | "yellow" | "red" | "primary";
     onPress: (id: string) => {};
 }) {
@@ -95,7 +97,10 @@ export function WishlistCard({
                                 paddingTop: 2
                             }}
                         >
-                            March 2024
+                            {new Date(created_at).toLocaleString("default", {
+                              month: "long",
+                              year: "numeric"
+                          })}
                         </Text>
                     </View>
                     <Text

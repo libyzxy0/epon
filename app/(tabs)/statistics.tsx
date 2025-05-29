@@ -30,7 +30,7 @@ export default function Statistics() {
             >
                 <View
                     style={{
-                        marginTop: 100,
+                        marginTop: 20,
                         marginHorizontal: 20
                     }}
                 >

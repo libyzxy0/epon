@@ -14,7 +14,7 @@ export default function TabOneScreen() {
             <AppTitle />
             <View
                 style={{
-                    marginTop: 100,
+                    marginTop: 20,
                     marginHorizontal: 20
                 }}
             >

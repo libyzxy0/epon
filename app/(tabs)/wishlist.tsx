@@ -96,15 +96,10 @@ export default function Wishlist() {
 
             <View
                 style={{
-                    marginHorizontal: 20
+                    marginHorizontal: 20,
+                    marginBottom: 120
                 }}
             >
-                <FloatingButtonPlus
-                    onPress={() =>
-                        Alert.alert("Debug Plus", "Plus button clicked!")
-                    }
-                />
-
                 <FlatList
                     data={wishes}
                     ListHeaderComponent={
@@ -112,7 +107,8 @@ export default function Wishlist() {
                             style={{
                                 fontFamily: "PoppinsBold",
                                 fontSize: 23,
-                                marginLeft: 5
+                                marginLeft: 5,
+                                marginTop: 20
                             }}
                         >
                             My Wishes
@@ -131,15 +127,20 @@ export default function Wishlist() {
                         />
                     )}
                     keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
                         flexDirection: "column",
                         gap: 15,
-                        paddingBottom: 90,
-                        paddingTop: 100
+                        paddingBottom: 40
                     }}
                     numColumns={1}
                 />
             </View>
+            <FloatingButtonPlus
+                onPress={() =>
+                    Alert.alert("Debug Plus", "Plus button clicked!")
+                }
+            />
         </SafeAreaView>
     );
 }

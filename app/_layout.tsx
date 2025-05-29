@@ -1,85 +1,126 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider
-} from '@react-navigation/native';
-import {
-  useFonts
-} from 'expo-font';
-import {
-  Stack
-} from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import {
-  useEffect
-} from 'react';
-import 'react-native-reanimated';
-
-import {
-  useColorScheme
-} from '@/hooks/useColorScheme';
+    DarkTheme,
+    DefaultTheme,
+    ThemeProvider
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, Suspense } from "react";
+import { ActivityIndicator } from "react-native";
+import "react-native-reanimated";
+import { DATABASE_NAME } from '@/constants/config'
+import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import * as SystemUI from "expo-system-ui";
+import {
+    SQLiteProvider,
+    useSQLiteContext,
+    openDatabaseAsync,
+    type SQLiteDatabase
+} from "expo-sqlite";
+import { migrations } from "@/database/migrations";
 
 export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary
+} from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+    // Ensure that reloading on `/modal` keeps a back button present.
+    initialRouteName: "(tabs)"
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded,
-    error] = useFonts( {
-      SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-      Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
-      PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
-      PoppinsItalic: require("../assets/fonts/Poppins-Italic.ttf"),
-      ...FontAwesome.font,
+    const [loaded, error] = useFonts({
+        SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+        Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+        PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
+        PoppinsItalic: require("../assets/fonts/Poppins-Italic.ttf"),
+        ...FontAwesome.font
     });
 
-  const colors = Colors[useColorScheme() ?? "light"];
+    const colors = Colors[useColorScheme() ?? "light"];
 
-  /* Fix for white screen flash when navigating, dark mode */
-  SystemUI.setBackgroundColorAsync(colors.background);
+    /* Fix for white screen flash when navigating, dark mode */
+    SystemUI.setBackgroundColorAsync(colors.background);
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  },
-    [error]);
+    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+    useEffect(() => {
+        if (error) throw error;
+    }, [error]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    if (!loaded) {
+        return null;
     }
-  },
-    [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+    const migrateDB = async () => {
+        const db = await openDatabaseAsync(DATABASE_NAME);
+        const {
+            create_coin_table,
+            create_transactions_table,
+            create_wishlist_table
+        } = migrations;
+        console.log("Lets migrate");
+        await db.execAsync(create_coin_table);
+        await db.execAsync(create_transactions_table);
+        await db.execAsync(create_wishlist_table);
+        
 
-  return <RootLayoutNav />;
+        const coin = await db.getFirstAsync("SELECT * FROM coins;");
+        if (coin === null) {
+            await db.runAsync(
+                `INSERT INTO coins (amount, currency, short_currency, last_update) VALUES (?, ?, ?, ?)`,
+                0,
+                "PHP",
+                "₱",
+                new Date().toISOString() 
+            );
+            console.log("Coin initialized!")
+        } else {
+          console.log("Coin:", coin)
+        }
+
+        console.log("Successfully executed migration!");
+    };
+
+    return (
+      <Suspense fallback={<ActivityIndicator size="large" />}>
+        <SQLiteProvider databaseName={DATABASE_NAME} onInit={migrateDB} useSuspense>
+            <RootLayoutNav />
+        </SQLiteProvider>
+        </Suspense>
+    );
 }
 
-  function RootLayoutNav() {
+function RootLayoutNav() {
     const colorScheme = useColorScheme();
 
     return (
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme: DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={ { headerShown: false }} />
-          <Stack.Screen name="settings" options={ { headerShown: true, title: "Settings",
-            animation: 'fade' }} />
-        </Stack>
-      </ThemeProvider>
+        <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="settings"
+                    options={{
+                        headerShown: true,
+                        title: "Settings",
+                        animation: "fade"
+                    }}
+                />
+            </Stack>
+        </ThemeProvider>
     );
-  }
+}

@@ -16,8 +16,6 @@ export default function AppTitle() {
   const router = useRouter();
   return (
     <View style={ {
-      position: 'absolute',
-      top: 0,
       zIndex: 40,
       backgroundColor: colors.background,
       paddingHorizontal: 25,

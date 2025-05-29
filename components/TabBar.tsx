@@ -31,7 +31,7 @@ export default function TabBar({ state, descriptors, navigation }) {
               isFocused={isFocused}
               routeName={route.name}
               color={
-                isFocused ? colors.primary[600] : colors.secondary[600]
+                isFocused ? colors.primary[400] : colors.secondary[600]
               }
               label={label}
             />

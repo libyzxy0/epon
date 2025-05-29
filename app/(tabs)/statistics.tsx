@@ -21,7 +21,8 @@ export default function Statistics() {
     return (
         <SafeAreaView
             style={{
-                flex: 1
+                flex: 1,
+                backgroundColor: colors.background
             }}
         >
             <AppTitle />
@@ -184,9 +185,9 @@ function BezierChart({
                         backgroundGradientTo: colors.secondary[100],
                         decimalPlaces: 2,
                         color: (opacity = 1) =>
-                            `rgba(255, 255, 255, ${opacity})`,
+                            colors.primary[300],
                         labelColor: (opacity = 1) =>
-                            `rgba(255, 255, 255, ${opacity})`,
+                            colors.secondary[800],
                         style: {
                             borderRadius: 16
                         },
@@ -265,7 +266,7 @@ function BarExamChart({
                         decimalPlaces: 2,
                         color: (opacity = 1) => colors.primary[300],
                         labelColor: (opacity = 1) =>
-                            `rgba(255, 255, 255, ${opacity})`,
+                            colors.secondary[800],
                         style: {
                             borderRadius: 16
                         },

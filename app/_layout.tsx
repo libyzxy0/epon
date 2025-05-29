@@ -92,7 +92,7 @@ export default function RootLayout() {
                 );
                 console.log("Coin initialized!");
             } else {
-                console.log(JSON.stringify(coin, null, 2) + "\n");
+               // console.log(JSON.stringify(coin, null, 2) + "\n");
             }
         }
     };

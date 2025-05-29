@@ -117,7 +117,8 @@ export default function Wishlist() {
     return (
         <SafeAreaView
             style={{
-                flex: 1
+                flex: 1,
+                backgroundColor: colors.background
             }}
         >
             <AppTitle />

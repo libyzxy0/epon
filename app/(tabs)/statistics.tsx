@@ -185,7 +185,7 @@ function BezierChart({
                         backgroundGradientTo: colors.secondary[100],
                         decimalPlaces: 2,
                         color: (opacity = 1) =>
-                            colors.primary[300],
+                            colors.text,
                         labelColor: (opacity = 1) =>
                             colors.secondary[800],
                         style: {

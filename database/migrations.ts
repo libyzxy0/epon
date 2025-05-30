@@ -5,6 +5,7 @@ export const migrations = {
       amount INTEGER NOT NULL,
       currency TEXT NOT NULL,
       short_currency TEXT NOT NULL,
+      started_at TEXT NOT NULL,
       last_update TEXT NOT NULL
     );
   `,
@@ -24,6 +25,7 @@ export const migrations = {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       description TEXT,
+      is_bought BOOLEAN NOT NULL DEFAULT 0,
       price INTEGER NOT NULL,
       created_at TEXT NOT NULL
     );

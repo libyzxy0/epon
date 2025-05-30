@@ -13,6 +13,7 @@ export function WishlistCard({
     progress,
     color,
     created_at,
+    is_bought,
     onPress
 }: {
     id: string;
@@ -21,6 +22,7 @@ export function WishlistCard({
     price: number;
     progress: number;
     created_at: string;
+    is_bought: boolean;
     color: "blue" | "yellow" | "red" | "primary";
     onPress: (id: string) => {};
 }) {

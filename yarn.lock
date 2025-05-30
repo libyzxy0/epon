@@ -2974,13 +2974,6 @@ expo-dev-menu@6.1.10:
   dependencies:
     expo-dev-menu-interface "1.10.0"
 
-expo-drizzle-studio-plugin@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/expo-drizzle-studio-plugin/-/expo-drizzle-studio-plugin-0.1.2.tgz"
-  integrity sha512-lodzNOOhSPpnd62PNTM7kWdWnQQn+j3WSWC4R/ehbYXRwZK1kvM9fjz50MnoMGrOcFDL9RtzY1zdXF/flrT3Gw==
-  dependencies:
-    expo-sqlite "^15.0.3"
-
 expo-file-system@~18.1.10:
   version "18.1.10"
   resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-18.1.10.tgz"
@@ -2992,6 +2985,11 @@ expo-font@~13.3.1:
   integrity sha512-d+xrHYvSM9WB42wj8vP9OOFWyxed5R1evphfDb6zYBmC1dA9Hf89FpT7TNFtj2Bk3clTnpmVqQTCYbbA2P3CLg==
   dependencies:
     fontfaceobserver "^2.1.0"
+
+expo-image@~2.1.7:
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/expo-image/-/expo-image-2.1.7.tgz"
+  integrity sha512-p2Gr8fP/YakFHHo4rbpJbRWwKNrZp1GzSD91WEG3ZYAbTVdTjheJ6gUxXgggFaxEbaY+4WeQ0c5j9tZq8+3cEg==
 
 expo-json-utils@~0.15.0:
   version "0.15.0"
@@ -3068,7 +3066,7 @@ expo-splash-screen@~0.30.8:
 
 expo-sqlite-devtools@^0.0.2:
   version "0.0.2"
-  resolved "https://registry.yarnpkg.com/expo-sqlite-devtools/-/expo-sqlite-devtools-0.0.2.tgz#b5c1fc9771c97be01dd65698f7e4d8d8f71da82a"
+  resolved "https://registry.npmjs.org/expo-sqlite-devtools/-/expo-sqlite-devtools-0.0.2.tgz"
   integrity sha512-nfKM/yzsP+ojXpt7alk8DBN7phD3vucFvoo6XD/gsJlLMYeC8RrnIRVgaqolrBfmDsEC0SW+dqzAUxwe+eLddw==
   dependencies:
     expo-sqlite "^15.0.3"
@@ -5218,9 +5216,9 @@ react-native-is-edge-to-edge@1.1.7, react-native-is-edge-to-edge@^1.1.6:
   resolved "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.7.tgz"
   integrity sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==
 
-react-native-reanimated@^3.17.5:
+react-native-reanimated@~3.17.4:
   version "3.17.5"
-  resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.17.5.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.17.5.tgz#09ebe3c9e3379c5c0c588b7ab30c131ea29b60f0"
   integrity sha512-SxBK7wQfJ4UoWoJqQnmIC7ZjuNgVb9rcY5Xc67upXAFKftWg0rnkknTw6vgwnjRcvYThrjzUVti66XoZdDJGtw==
   dependencies:
     "@babel/plugin-transform-arrow-functions" "^7.0.0-0"

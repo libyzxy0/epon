@@ -11,6 +11,7 @@ export function useCoinActions() {
             coins: coin.amount,
             currency: coin.currency,
             short_currency: coin.short_currency,
+            started_at: coin.started_at,
             last_update: coin.last_update
         });
     };

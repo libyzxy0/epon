@@ -1,3 +1,4 @@
+import "react-native-reanimated";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
     DarkTheme,
@@ -9,7 +10,6 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, Suspense } from "react";
 import { CustomLoading } from "@/components/CustomLoading";
-import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import * as SystemUI from "expo-system-ui";
@@ -23,6 +23,9 @@ import * as SQLite from "expo-sqlite";
 import { DATABASE_NAME } from "@/database/config";
 import { useCoinActions } from "@/hooks/useCoinsActions";
 import { useSQLiteDevTools } from "expo-sqlite-devtools";
+import Storage from "expo-sqlite/kv-store";
+import { Appearance } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -62,12 +65,18 @@ export default function RootLayout() {
         }
     }, [loaded]);
 
+    useEffect(() => {
+        const setupTheme = () => {
+            const apptheme = Storage.getItemSync("apptheme");
+            if (apptheme !== null) {
+                Appearance.setColorScheme(apptheme);
+            }
+        };
+        setupTheme();
+    }, []);
+
     if (!loaded) {
-        return (
-            <CustomLoading
-                text="Loading fonts..."
-            />
-        );
+        return <CustomLoading text="Loading fonts..." />;
     }
 
     const migrateDB = async (db: SQLiteDatabase) => {
@@ -81,30 +90,30 @@ export default function RootLayout() {
             await db.execAsync(create_transactions_table);
             await db.execAsync(create_wishlist_table);
 
+            const now = () =>
+                new Date().toLocaleString("sv-SE").replace(" ", "T") +
+                "." +
+                String(new Date().getMilliseconds()).padStart(3, "0");
+
             const coin = await db.getFirstAsync("SELECT * FROM coins;");
             if (coin === null) {
                 await db.runAsync(
-                    `INSERT INTO coins (amount, currency, short_currency, last_update) VALUES (?, ?, ?, ?)`,
+                    `INSERT INTO coins (amount, currency, short_currency, started_at, last_update) VALUES (?, ?, ?, ?, ?)`,
                     0,
                     "PHP",
                     "₱",
-                    new Date().toISOString()
+                    now(),
+                    now()
                 );
                 console.log("Coin initialized!");
             } else {
-               // console.log(JSON.stringify(coin, null, 2) + "\n");
+                // console.log(JSON.stringify(coin, null, 2) + "\n");
             }
         }
     };
 
     return (
-        <Suspense
-            fallback={
-                <CustomLoading
-                    text="Loading data..."
-                />
-            }
-        >
+        <Suspense fallback={<CustomLoading text="Loading..." />}>
             <SQLiteProvider
                 databaseName={DATABASE_NAME}
                 onInit={migrateDB}
@@ -119,9 +128,9 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
     const { fetchCoins } = useCoinActions();
-    
+    const colors = Colors[useColorScheme() ?? "light"];
     const db = useSQLiteContext();
-    
+
     useSQLiteDevTools(db);
 
     useEffect(() => {
@@ -131,17 +140,25 @@ function RootLayoutNav() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                    name="settings"
-                    options={{
-                        headerShown: true,
-                        title: "Settings",
-                        animation: "fade"
-                    }}
-                />
-            </Stack>
+            <GestureHandlerRootView>
+                <Stack>
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="settings"
+                        options={{
+                            headerShown: true,
+                            title: "Settings",
+                            animation: "fade",
+                            headerStyle: {
+                                backgroundColor: colors.background
+                            }
+                        }}
+                    />
+                </Stack>
+            </GestureHandlerRootView>
         </ThemeProvider>
     );
 }

@@ -1,14 +1,23 @@
 import { Text, View } from "@/components/Themed";
-import { Pressable } from "react-native";
+import { Pressable, Switch, Appearance } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
+import Storage from 'expo-sqlite/kv-store';
+
 export default function Settings() {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
     const router = useRouter();
+    const [isDarkMode, setIsDarkMode] = useState(theme === "dark" ? true : false);
+    const toggleSwitch = () => {
+        setIsDarkMode(previousState => !previousState);
+        Storage.setItemSync('apptheme', theme === "dark" ? "light" : "dark");
+        Appearance.setColorScheme(theme === "dark" ? "light" : "dark");
+    };
     return (
         <SafeAreaView
             style={{
@@ -18,7 +27,6 @@ export default function Settings() {
         >
             <View
                 style={{
-                    paddingTop: 20,
                     margin: 15,
                     flex: 1
                 }}
@@ -127,10 +135,17 @@ export default function Settings() {
                     >
                         <Text>Dark Mode</Text>
                         <View transparent>
-                            <Feather
-                                name="moon"
-                                size={20}
-                                color={colors.secondary[300]}
+                            <Switch
+                                trackColor={{
+                                    false: "#767577",
+                                    true: colors.primary[300]
+                                }}
+                                thumbColor={
+                                    isDarkMode ? colors.primary[400] : "#f4f3f4"
+                                }
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={toggleSwitch}
+                                value={isDarkMode}
                             />
                         </View>
                     </View>

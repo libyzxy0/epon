@@ -5,6 +5,7 @@ type CoinState = {
     currency: string;
     short_currency: string;
     last_update: string;
+    started_at: string;
     setCoins: (data: Partial<CoinState>) => void;
 };
 
@@ -13,5 +14,6 @@ export const useCoinStore = create<CoinState>((set) => ({
     currency: "",
     short_currency: "",
     last_update: "",
+    started_at: "",
     setCoins: (data) => set((state) => ({ ...state, ...data }))
 }));

@@ -4,11 +4,15 @@ import Colors from "@/constants/Colors";
 import AppTitle from "@/components/AppTitle";
 import { WishlistCard } from "@/components/WishlistCard";
 import { FlatList } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FloatingButtonPlus } from "@/components/FloatingButtonPlus";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert } from "react-native";
+import { Alert, Pressable } from "react-native";
 import { useCoinStore } from "@/store/useCoinStore";
+import { useWishlistStore } from "@/store/useWishlistStore";
+import { useWishlistActions } from "@/hooks/useWishlistActions";
+import { MakeWishSheet } from "@/components/MakeWishSheet";
+
 
 const handleColor = (progress: number): string => {
     if (progress < 25) {
@@ -27,103 +31,30 @@ export default function Wishlist() {
     const colors = Colors[theme];
     const coins = useCoinStore(state => state.coins);
 
-    const rawWish = [
-        {
-            id: "1",
-            name: "Smartphone (Mid-range)",
-            description:
-                "A reliable phone with a good camera, battery life, and performance for everyday tasks.",
-            price: 18000,
-            created_at: "2025-05-29T21:17:03.123"
-        },
-        {
-            id: "2",
-            name: "Laptop for Work/Study",
-            description:
-                "A lightweight and efficient laptop for coding, online classes, and productivity.",
-            price: 40000,
-            created_at: "2025-02-29T21:17:03.123"
-        },
-        {
-            id: "3",
-            name: "Noise-Cancelling Headphones",
-            description:
-                "Ideal for focusing while studying or working in noisy environments.",
-            price: 7000,
-            created_at: "2025-08-29T21:17:03.123"
-        },
-        {
-            id: "4",
-            name: "Travel Backpack",
-            description:
-                "A durable and spacious backpack for daily use or weekend trips.",
-            price: 2500,
-            created_at: "2025-11-29T21:17:03.123"
-        },
-        {
-            id: "5",
-            name: "Digital Drawing Tablet",
-            description:
-                "For practicing digital art and graphic design projects.",
-            price: 6000,
-            created_at: "2025-12-29T21:17:03.123"
-        },
-        {
-            id: "6",
-            name: "Bookshelf with Books",
-            description:
-                "A set of must-read books and a minimalist shelf to organize them.",
-            price: 3500,
-            created_at: "2025-06-29T21:17:03.123"
-        },
-        {
-            id: "7",
-            name: "Fitness Tracker",
-            description:
-                "To monitor daily activity, heart rate, and sleep patterns.",
-            price: 2500,
-            created_at: "2025-07-29T21:17:03.123"
-        },
-        {
-            id: "8",
-            name: "Gaming Console",
-            description: "For playing games and relaxing during free time.",
-            price: 25000,
-            created_at: "2025-09-29T21:17:03.123"
-        },
-        {
-            id: "9",
-            name: "Weekend Beach Trip",
-            description:
-                "A 2-day getaway with friends or family to relax and unwind.",
-            price: 5000,
-            created_at: "2025-01-29T21:17:03.123"
-        },
-        {
-            id: "10",
-            name: "Desk Setup Upgrade",
-            description:
-                "Includes an ergonomic chair, desk lamp, and monitor stand for better productivity.",
-            price: 8500,
-            created_at: "2025-10-29T21:17:03.123"
-        }
-    ];
+    const { fetchWishlist } = useWishlistActions();
+    const { wishlist } = useWishlistStore();
+    useEffect(() => {
+        fetchWishlist();
+    }, []);
 
     const [wishes, setWishes] = useState([]);
 
     useEffect(() => {
-        const w = rawWish.map(item => {
+        const w = wishlist.map(item => {
             return {
                 id: item.id,
                 name: item.name,
                 description: item.description,
                 price: item.price,
                 progress: Math.round(Math.min((coins / item.price) * 100, 100)),
+                is_bought: item.is_bought,
                 created_at: item.created_at
             };
         });
         setWishes(w);
-    }, [coins]);
+    }, [coins, wishlist]);
+
+    const bottomSheetRef = useRef<BottomSheet>(null);
 
     return (
         <SafeAreaView
@@ -165,6 +96,7 @@ export default function Wishlist() {
                             color={handleColor(item.progress)}
                             price={item.price}
                             progress={item.progress}
+                            is_bought={item.is_bought}
                             created_at={item.created_at}
                         />
                     )}
@@ -178,11 +110,14 @@ export default function Wishlist() {
                     numColumns={1}
                 />
             </View>
+
             <FloatingButtonPlus
-                onPress={() =>
-                    Alert.alert("Debug Plus", "Plus button clicked!")
-                }
+                onPress={() => bottomSheetRef.current?.expand()}
             />
+            
+            <MakeWishSheet ref={bottomSheetRef} />
+            
+            
         </SafeAreaView>
     );
 }

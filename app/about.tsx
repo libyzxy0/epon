@@ -20,7 +20,7 @@ export default function About() {
                 "sqlite_version()": string;
             }>("SELECT sqlite_version()");
             setVersion(result["sqlite_version()"]);
-            const allRows = await db.getAllAsync('SELECT * FROM coins;');
+            const allRows = await db.getAllAsync('SELECT * FROM transactions;');
             setData(allRows)
         }
         setup();
@@ -48,11 +48,11 @@ export default function About() {
             <Text
                 style={{
                     paddingVertical: 20,
-                    color: colors.red[400]
+                    color: colors.red['default']
                 }}
             >
                 {"Version: " + version}
-                {"\nData:" + JSON.stringify(data)}
+                {"\nData:" + (JSON.stringify(data, null, 2) + "\n")}
                 {"\nCoins:" + coins}
             </Text>
 

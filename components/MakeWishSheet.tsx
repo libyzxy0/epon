@@ -21,13 +21,16 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
         const { success, error } = makeAWish({
             name,
             description,
-            price: Number(price)
+            price: Number(price) /* Convert to number type, baka mag 1+1=11 */
         });
+        
+        /* I clear ang putang inang form nayan */
         ref.current?.close();
         setName(null);
         setDescription(null);
         setPrice(null);
-        console.log("OUTPUT NG INA MO", success, error);
+        
+        /*console.log("OUTPUT NG INA MO:", success, error);*/
     };
 
     return (
@@ -114,7 +117,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                             borderWidth: 1,
                             borderColor: colors.border
                         }}
-                        placeholder="This is my f*cking description."
+                        placeholder="Si Jan Liby ay napakapogi."
                         placeholderTextColor={colors.textSecondary}
                     />
                 </View>

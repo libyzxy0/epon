@@ -1,289 +1,208 @@
-import { Text, View } from "@/components/Themed";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import {
+  Text,
+  View
+} from "@/components/Themed";
+import {
+  useColorScheme
+} from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import AppTitle from "@/components/AppTitle";
-import { LineChart, PieChart, BarChart } from "react-native-chart-kit";
-import { Dimensions, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-const monthChartData = {
-    labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    data: [1000, 3000, 2400, 2040, 5000, 8000, 9000, 6000]
-};
-const dayChartData = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    data: [100, 300, 400, 400, 400, 400, 400, 450]
-};
+import {
+  MostSavedCoinChart
+} from "@/components/MostSavedCoinChart";
+import {
+  MonthlyCoinChart
+} from "@/components/MonthlyCoinChart";
+import {
+  DailyCoinChart
+} from "@/components/DailyCoinChart";
+import {
+  LineChart,
+  BarChart
+} from "react-native-chart-kit";
+import {
+  Dimensions,
+  ScrollView
+} from "react-native";
+import {
+  SafeAreaView
+} from "react-native-safe-area-context";
+import {
+  useMemo,
+  useState,
+  useEffect
+} from 'react'
+import {
+  useSQLiteContext
+} from "expo-sqlite";
+import {
+  useCoinStore
+} from '@/store/useCoinStore'
 
 export default function Statistics() {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
-    return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-                backgroundColor: colors.background
-            }}
+  const theme = useColorScheme() ?? "light";
+  const colors = Colors[theme];
+  const {
+    short_currency,
+    coins
+  } = useCoinStore();
+  const [transactions,
+    setTransactions] = useState();
+
+  const db = useSQLiteContext();
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const transacs = await db.getAllAsync('SELECT * FROM transactions;');
+      setTransactions(transacs);
+      console.log("Transactions loaded:", transactions.length)
+    }
+    loadTransactions();
+  }, [coins])
+
+  const mostSavedCoin = useMemo(() => {
+    if (!transactions || transactions.length === 0) return [];
+
+    const highlightedAmounts = [5,
+      10,
+      20,
+      50];
+
+    const reduced = transactions.reduce((acc, current) => {
+      const amountKey = highlightedAmounts.includes(current.amount) ? current.amount: 'Others';
+      const existing = acc.find(item => item.amount === amountKey);
+
+      if (existing) {
+        existing.used++;
+      } else {
+        acc.push({
+          amount: amountKey, used: 1
+        });
+      }
+
+      return acc;
+    },
+      []);
+
+    return reduced.map(r => {
+      const colorMap = {
+        5: colors.yellow.default,
+        10: colors.red.default,
+        20: colors.primary.default,
+        50: colors.blue.default
+      };
+
+      return {
+        amount: r.used,
+        name: r.amount === 'Others' ? 'Others': `${short_currency}${r.amount}`,
+        color: colorMap[r.amount] || colors.textSecondary,
+        legendFontColor: colorMap[r.amount] || colors.textSecondary,
+        legendFontSize: 15
+      };
+    });
+  }, [transactions]);
+
+  
+
+const dayChartData = useMemo(() => {
+  const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  if (!transactions || transactions.length === 0) {
+    return {
+      labels: weekLabels,
+      data: Array(7).fill(0)
+    };
+  }
+
+  const totals = Array(7).fill(0);
+
+  transactions.forEach((t) => {
+    const jsDay = new Date(t.created_at).getDay();
+    const index = jsDay === 0 ? 6 : jsDay - 1;
+    totals[index] += t.amount;
+  });
+
+  const todayJS = new Date().getDay();
+  const todayIndex = todayJS === 0 ? 6 : todayJS - 1;
+
+  const rotatedLabels = [...weekLabels.slice(todayIndex), ...weekLabels.slice(0, todayIndex)];
+  const rotatedData = [...totals.slice(todayIndex), ...totals.slice(0, todayIndex)];
+
+  return {
+    labels: rotatedLabels,
+    data: rotatedData
+  };
+}, [transactions]);
+
+const monthChartData = useMemo(() => {
+  const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  if (!transactions || transactions.length === 0) {
+    return {
+      labels: monthLabels,
+      data: Array(12).fill(0)
+    };
+  }
+
+  const totals = Array(12).fill(0); 
+
+  transactions.forEach((t) => {
+    const monthIndex = new Date(t.created_at).getMonth(); 
+    totals[monthIndex] += t.amount;
+  });
+
+  const currentMonthIndex = new Date().getMonth();
+
+  const rotatedLabels = [
+    ...monthLabels.slice(currentMonthIndex),
+    ...monthLabels.slice(0, currentMonthIndex)
+  ];
+
+  const rotatedData = [
+    ...totals.slice(currentMonthIndex),
+    ...totals.slice(0, currentMonthIndex)
+  ];
+
+  return {
+    labels: rotatedLabels,
+    data: rotatedData
+  };
+}, [transactions]);
+
+
+
+  return (
+    <SafeAreaView
+      style={ {
+        flex: 1,
+        backgroundColor: colors.background
+      }}
+      >
+      <AppTitle />
+      <ScrollView
+        contentContainerStyle={ { flexGrow: 1,
+          paddingBottom: 95 }}
         >
-            <AppTitle />
-            <ScrollView
-                contentContainerStyle={{ flexGrow: 1, paddingBottom: 95 }}
-            >
-                <View
-                    style={{
-                        marginTop: 20,
-                        marginHorizontal: 20
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontFamily: "PoppinsBold",
-                            fontSize: 23,
-                            marginLeft: 5
-                        }}
-                    >
-                        Statistics
-                    </Text>
-                    <BezierChart isBezier chartData={monthChartData} />
-                    <BarExamChart chartData={dayChartData} />
-                    <CutiePieChart />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
-}
-
-function CutiePieChart({ chartData }) {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
-
-    const mostSavedCoin = [
-        {
-            name: "₱5",
-            amount: 9000,
-            color: colors.yellow['default'],
-            legendFontColor: colors.yellow['default'],
-            legendFontSize: 15
-        },
-        {
-            name: "₱10",
-            amount: 3000,
-            color: colors.red['default'],
-            legendFontColor: colors.red['default'],
-            legendFontSize: 15
-        },
-        {
-            name: "₱20",
-            amount: 4000,
-            color: colors.primary['default'],
-            legendFontColor: colors.primary['default'],
-            legendFontSize: 15
-        },
-        {
-            name: "₱50",
-            amount: 3500,
-            color: colors.blue['default'],
-            legendFontColor: colors.blue['default'],
-            legendFontSize: 15
-        },
-        {
-            name: "Other",
-            amount: 5400,
-            color: "#7b11df",
-            legendFontColor: "#7b11df",
-            legendFontSize: 15
-        }
-    ];
-    return (
         <View
-            style={{
-                marginTop: 20,
-                paddingHorizontal: 16,
-                paddingVertical: 15,
-                borderRadius: 9,
-                backgroundColor: colors.card
+          style={ {
+            marginTop: 20,
+            marginHorizontal: 20
+          }}
+          >
+          <Text
+            style={ {
+              fontFamily: "PoppinsBold",
+              fontSize: 23,
+              marginLeft: 5
             }}
-        >
-            <Text
-                style={{
-                    fontFamily: "PoppinsBold",
-                    fontSize: 16,
-                    color: colors.primary['default']
-                }}
             >
-                Most Saved Coin
-            </Text>
-            <PieChart
-                data={mostSavedCoin}
-                width={289}
-                height={180}
-                chartConfig={{
-                    color: () => colors.primary['default']
-                }}
-                accessor={"amount"}
-                backgroundColor={colors.card}
-                center={[0, 5]}
-                absolute
-            />
+            Statistics
+          </Text>
+          <MostSavedCoinChart chartData={mostSavedCoin} />
+          <DailyCoinChart chartData={dayChartData} />
+          <MonthlyCoinChart chartData={monthChartData} />
         </View>
-    );
-}
-
-function BezierChart({
-    chartData,
-    isBezier
-}: {
-    chartData: { labels: string[]; data: number[] };
-}) {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
-    return (
-        <View
-            style={{
-                marginTop: 20,
-                paddingHorizontal: 16,
-                paddingVertical: 15,
-                borderRadius: 9,
-                backgroundColor: colors.card
-            }}
-        >
-            <Text
-                style={{
-                    fontFamily: "PoppinsBold",
-                    fontSize: 16,
-                    color: colors.primary['default']
-                }}
-            >
-                Montly Coins
-            </Text>
-
-            <ScrollView horizontal>
-                <LineChart
-                    data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                data: chartData.data
-                            }
-                        ]
-                    }}
-                    width={
-                        (monthChartData.labels.length *
-                            Dimensions.get("window").width) /
-                        6
-                    }
-                    height={220}
-                    yAxisLabel="₱"
-                    yAxisSuffix=""
-                    yAxisInterval={1}
-                    chartConfig={{
-                        propsForBackgroundLines: {
-                            stroke: colors.textTertiary
-                        },
-                        backgroundColor: colors.card,
-                        backgroundGradientFrom: colors.card,
-                        backgroundGradientTo: colors.cardSecondary,
-                        decimalPlaces: 2,
-                        color: (opacity = 1) =>
-                            colors.text,
-                        labelColor: (opacity = 1) =>
-                            colors.text,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: colors.primary['default']
-                        }
-                    }}
-                    bezier={isBezier}
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16,
-                        marginTop: 10
-                    }}
-                />
-            </ScrollView>
-        </View>
-    );
-}
-
-function BarExamChart({
-    chartData,
-    isBezier
-}: {
-    chartData: { labels: string[]; data: number[] };
-}) {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
-    return (
-        <View
-            style={{
-                marginTop: 20,
-                paddingHorizontal: 16,
-                paddingVertical: 15,
-                borderRadius: 9,
-                backgroundColor: colors.card
-            }}
-        >
-            <Text
-                style={{
-                    fontFamily: "PoppinsBold",
-                    fontSize: 16,
-                    color: colors.primary['default']
-                }}
-            >
-                Daily Coins
-            </Text>
-
-            <ScrollView horizontal>
-                <BarChart
-                    data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                data: chartData.data
-                            }
-                        ]
-                    }}
-                    width={
-                        (monthChartData.labels.length *
-                            Dimensions.get("window").width) /
-                        6
-                    }
-                    height={220}
-                    yAxisLabel="₱"
-                    yAxisSuffix=""
-                    yAxisInterval={1}
-                    chartConfig={{
-                        propsForBackgroundLines: {
-                            stroke: colors.textTertiary
-                        },
-                        backgroundColor: colors.card,
-                        backgroundGradientFrom: colors.card,
-                        backgroundGradientTo: colors.cardSecondary,
-                        decimalPlaces: 2,
-                        color: (opacity = 1) => colors.primary['default'],
-                        labelColor: (opacity = 1) =>
-                            colors.text,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: colors.primary['default']
-                        }
-                    }}
-                    bezier={isBezier}
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16,
-                        marginTop: 10
-                    }}
-                />
-            </ScrollView>
-        </View>
-    );
+      </ScrollView>
+    </SafeAreaView>
+  );
 }

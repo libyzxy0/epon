@@ -7,8 +7,6 @@ export function useWishlistActions() {
 
     const fetchWishlist = async () => {
         const wishlistData = await db.getAllAsync("SELECT * FROM wishlist;");
-        
-        console.log(wishlistData)
 
         const safe = wishlistData.map(w => ({
             ...w,
@@ -44,7 +42,6 @@ export function useWishlistActions() {
                 error: null
             };
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 error: error?.message || "Failed to make a wish dude!"

@@ -15,7 +15,6 @@ export const migrations = {
       name TEXT NOT NULL,
       description TEXT,
       transaction_type TEXT NOT NULL,
-      coin_type TEXT NOT NULL,
       amount INTEGER NOT NULL,
       created_at TEXT NOT NULL
     );

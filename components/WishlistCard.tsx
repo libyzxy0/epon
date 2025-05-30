@@ -145,3 +145,5 @@ export function WishlistCard({
         </TouchableOpacity>
     );
 }
+
+/* I love you Renelyn */

@@ -22,7 +22,7 @@ import { migrations } from "@/database/migrations";
 import * as SQLite from "expo-sqlite";
 import { DATABASE_NAME } from "@/database/config";
 import { useCoinActions } from "@/hooks/useCoinsActions";
-import { useSQLiteDevTools } from "expo-sqlite-devtools";
+/*import { useSQLiteDevTools } from "expo-sqlite-devtools";*/
 import Storage from "expo-sqlite/kv-store";
 import { Appearance } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -129,9 +129,11 @@ function RootLayoutNav() {
     const colorScheme = useColorScheme();
     const { fetchCoins } = useCoinActions();
     const colors = Colors[useColorScheme() ?? "light"];
+    /*
     const db = useSQLiteContext();
 
     useSQLiteDevTools(db);
+    */
 
     useEffect(() => {
         fetchCoins();

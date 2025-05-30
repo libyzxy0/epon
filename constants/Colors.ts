@@ -26,14 +26,14 @@ export default {
         danger: "#dc2626",
         text: "#1e293b",
         textSecondary: "#64748b",
-        textTertiary: "#94a3b8",
+        textTertiary: "#9faaba",
         background: "#f8fafc"
     },
     dark: {
         primary: {
             lowOpacity: "#001b14",
             secondary: "#014132",
-            default: "#33FFBB"
+            default: "#4DBFA0"
         },
         blue: {
             lowOpacity: "#001119",

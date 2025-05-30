@@ -6,16 +6,18 @@ import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import Storage from 'expo-sqlite/kv-store';
+import Storage from "expo-sqlite/kv-store";
 
 export default function Settings() {
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
     const router = useRouter();
-    const [isDarkMode, setIsDarkMode] = useState(theme === "dark" ? true : false);
+    const [isDarkMode, setIsDarkMode] = useState(
+        theme === "dark" ? true : false
+    );
     const toggleSwitch = () => {
         setIsDarkMode(previousState => !previousState);
-        Storage.setItemSync('apptheme', theme === "dark" ? "light" : "dark");
+        Storage.setItemSync("apptheme", theme === "dark" ? "light" : "dark");
         Appearance.setColorScheme(theme === "dark" ? "light" : "dark");
     };
     return (
@@ -138,10 +140,12 @@ export default function Settings() {
                             <Switch
                                 trackColor={{
                                     false: "#767577",
-                                    true: colors.primary['default']
+                                    true: colors.primary["default"]
                                 }}
                                 thumbColor={
-                                    isDarkMode ? colors.primary['default'] : "#f4f3f4"
+                                    isDarkMode
+                                        ? colors.primary["default"]
+                                        : "#f4f3f4"
                                 }
                                 ios_backgroundColor="#3e3e3e"
                                 onValueChange={toggleSwitch}
@@ -154,7 +158,7 @@ export default function Settings() {
                 <Text
                     style={{
                         marginTop: 60,
-                        color: colors.red['default'],
+                        color: colors.red["default"],
                         marginLeft: 5,
                         fontFamily: "PoppinsBold",
                         fontSize: 12
@@ -183,14 +187,14 @@ export default function Settings() {
                             justifyContent: "space-between"
                         }}
                     >
-                        <Text style={{ color: colors.red['default'] }}>
+                        <Text style={{ color: colors.red["default"] }}>
                             Erase All Data
                         </Text>
                         <View transparent>
                             <Feather
                                 name="trash"
                                 size={20}
-                                color={colors.red[400]}
+                                color={colors.red["default"]}
                             />
                         </View>
                     </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Modal, Pressable, TextInput } from "react-native";
+import { View, Text, Modal, TouchableOpacity, TextInput } from "react-native";
 import { useState } from "react";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
@@ -130,7 +130,7 @@ export function SaveMoneyModal({
                             gap: 15
                         }}
                     >
-                        <Pressable
+                        <TouchableOpacity activeOpacity={0.7}
                             style={{
                                 flex: 1,
                                borderWidth: 1,
@@ -151,9 +151,9 @@ export function SaveMoneyModal({
                             >
                                 Cancel
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
 
-                        <Pressable
+                        <TouchableOpacity activeOpacity={0.7}
                             style={{
                                 flex: 1,
                                 paddingVertical: 9,
@@ -172,7 +172,7 @@ export function SaveMoneyModal({
                             >
                                 Confirm
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

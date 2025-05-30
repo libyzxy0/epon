@@ -6,7 +6,7 @@ import {
   useColorScheme
 } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
-import { Pressable, Alert } from 'react-native'
+import { TouchableOpacity, Alert } from 'react-native'
 import { useCoinStore } from '@/store/useCoinStore'
 import { useSQLiteContext } from "expo-sqlite";
 export function CoinStatus() {
@@ -47,13 +47,13 @@ export function CoinStatus() {
             </View>
 
             <View transparent>
-                <Pressable
+                <TouchableOpacity activeOpacity={0.7}
                     onPress={() =>
                         Alert.alert("Debug", "Use Money button clicked!")
                     }
                     style={{
                         backgroundColor: colors.primary['default'],
-                        paddingHorizontal: 9,
+                        paddingHorizontal: 12,
                         paddingVertical: 4,
                         borderRadius: 50
                     }}
@@ -61,12 +61,13 @@ export function CoinStatus() {
                     <Text
                         style={{
                             fontSize: 12,
-                            paddingTop: 1.5
+                            paddingTop: 1.5,
+                            color: colors.card
                         }}
                     >
                         Use Money
                     </Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     );

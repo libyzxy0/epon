@@ -1,7 +1,7 @@
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Text, View } from "@/components/Themed";
-import { Pressable, Alert } from "react-native";
+import { TouchableOpacity, Alert } from "react-native";
 import { useCoinActions } from "@/hooks/useCoinsActions";
 import { SaveMoneyModal } from "@/components/SaveMoneyModal";
 import { useState } from 'react'
@@ -147,7 +147,7 @@ export function SaveCoin() {
                         }
                     />
 
-                    <Pressable
+                    <TouchableOpacity activeOpacity={0.7}
                         onPress={() =>
                             handleSaveMoney({ type: "custom", amount: null })
                         }
@@ -175,7 +175,7 @@ export function SaveCoin() {
                         >
                             Custom Amount
                         </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </View>
             <SaveMoneyModal
@@ -198,7 +198,7 @@ function CoinButton({
     const theme = useColorScheme() ?? "light";
     const colors = Colors[theme];
     return (
-        <Pressable
+        <TouchableOpacity activeOpacity={0.7}
             onPress={onPress}
             style={{
                 borderWidth: 2,
@@ -222,6 +222,6 @@ function CoinButton({
             >
                 {short_currency} {amount}
             </Text>
-        </Pressable>
+        </TouchableOpacity>
     );
 }

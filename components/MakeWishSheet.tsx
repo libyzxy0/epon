@@ -4,7 +4,7 @@ import Colors from "@/constants/Colors";
 import { BottomShit } from "@/components/BottomShit";
 import BottomSheet, { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useState } from "react";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useWishlistActions } from "@/hooks/useWishlistActions";
 
 export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
@@ -150,7 +150,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                     />
                 </View>
 
-                <Pressable
+                <TouchableOpacity activeOpacity={0.7}
                     onPress={handleCreateWish}
                     style={{
                         backgroundColor: colors.primary['default'],
@@ -168,7 +168,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                     >
                         Make Wish
                     </Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </BottomShit>
     );

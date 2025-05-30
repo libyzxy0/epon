@@ -1,7 +1,7 @@
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Text, View } from "@/components/Themed";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useCoinStore } from "@/store/useCoinStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -30,7 +30,7 @@ export function WishlistCard({
     const colors = Colors[theme];
     const { short_currency } = useCoinStore();
     return (
-        <Pressable onLongPress={() => onPress(id)}>
+        <TouchableOpacity activeOpacity={0.8} onLongPress={() => onPress(id)}>
             <View
                 style={{
                     backgroundColor: colors.card,
@@ -61,12 +61,11 @@ export function WishlistCard({
                     <Text
                         style={{
                             paddingTop: 1,
-                            color: colors.primary['default'],
+                            color: is_bought ? colors.textSecondary : colors.primary['default'],
                             fontFamily: "PoppinsBold"
                         }}
                     >
-                        {short_currency}
-                        {price.toLocaleString("en-US")}
+                        {is_bought ? "Bought" : short_currency + price.toLocaleString("en-US")}
                     </Text>
                 </View>
                 <Text
@@ -143,6 +142,6 @@ export function WishlistCard({
                     />
                 </View>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     );
 }

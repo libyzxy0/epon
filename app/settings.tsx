@@ -38,14 +38,14 @@ export default function Settings() {
                         borderRadius: 9,
                         flexDirection: "column",
                         paddingHorizontal: 15,
-                        backgroundColor: colors.secondary[50]
+                        backgroundColor: colors.card
                     }}
                 >
                     <Pressable
                         onPress={() => router.push("/about")}
                         style={{
-                            borderBottomWidth: 2,
-                            borderColor: colors.secondary[100],
+                            borderBottomWidth: 1,
+                            borderColor: colors.cardSecondary,
                             paddingVertical: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -57,15 +57,15 @@ export default function Settings() {
                             <Feather
                                 name="chevron-right"
                                 size={20}
-                                color={colors.secondary[300]}
+                                color={colors.textTertiary}
                             />
                         </View>
                     </Pressable>
                     <View
                         transparent
                         style={{
-                            borderBottomWidth: 2,
-                            borderColor: colors.secondary[100],
+                            borderBottomWidth: 1,
+                            borderColor: colors.cardSecondary,
                             paddingBottom: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -77,7 +77,7 @@ export default function Settings() {
                             <Feather
                                 name="chevron-down"
                                 size={20}
-                                color={colors.secondary[300]}
+                                color={colors.textTertiary}
                             />
                         </View>
                     </View>
@@ -85,8 +85,8 @@ export default function Settings() {
                     <View
                         transparent
                         style={{
-                            borderBottomWidth: 2,
-                            borderColor: colors.secondary[100],
+                            borderBottomWidth: 1,
+                            borderColor: colors.cardSecondary,
                             paddingBottom: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -98,7 +98,7 @@ export default function Settings() {
                             <Feather
                                 name="heart"
                                 size={20}
-                                color={colors.secondary[300]}
+                                color={colors.textTertiary}
                             />
                         </View>
                     </View>
@@ -106,8 +106,8 @@ export default function Settings() {
                     <View
                         transparent
                         style={{
-                            borderBottomWidth: 2,
-                            borderColor: colors.secondary[100],
+                            borderBottomWidth: 1,
+                            borderColor: colors.cardSecondary,
                             paddingBottom: 10,
                             flexDirection: "row",
                             alignItems: "center",
@@ -119,7 +119,7 @@ export default function Settings() {
                             <Feather
                                 name="bell"
                                 size={20}
-                                color={colors.secondary[300]}
+                                color={colors.textTertiary}
                             />
                         </View>
                     </View>
@@ -138,10 +138,10 @@ export default function Settings() {
                             <Switch
                                 trackColor={{
                                     false: "#767577",
-                                    true: colors.primary[300]
+                                    true: colors.primary['default']
                                 }}
                                 thumbColor={
-                                    isDarkMode ? colors.primary[400] : "#f4f3f4"
+                                    isDarkMode ? colors.primary['default'] : "#f4f3f4"
                                 }
                                 ios_backgroundColor="#3e3e3e"
                                 onValueChange={toggleSwitch}
@@ -154,7 +154,7 @@ export default function Settings() {
                 <Text
                     style={{
                         marginTop: 60,
-                        color: colors.red[300],
+                        color: colors.red['default'],
                         marginLeft: 5,
                         fontFamily: "PoppinsBold",
                         fontSize: 12
@@ -171,7 +171,7 @@ export default function Settings() {
                         borderRadius: 9,
                         flexDirection: "column",
                         paddingHorizontal: 15,
-                        backgroundColor: colors.secondary[50]
+                        backgroundColor: colors.card
                     }}
                 >
                     <View
@@ -183,14 +183,14 @@ export default function Settings() {
                             justifyContent: "space-between"
                         }}
                     >
-                        <Text style={{ color: colors.red[400] }}>
+                        <Text style={{ color: colors.red['default'] }}>
                             Erase All Data
                         </Text>
                         <View transparent>
                             <Feather
                                 name="trash"
                                 size={20}
-                                color={colors.red[300]}
+                                color={colors.red[400]}
                             />
                         </View>
                     </View>

@@ -16,7 +16,7 @@ export function CoinStatus() {
     return (
         <View
             style={{
-                backgroundColor: colors.secondary[50],
+                backgroundColor: colors.card,
                 paddingHorizontal: 16,
                 paddingVertical: 10,
                 borderRadius: 9,
@@ -29,7 +29,7 @@ export function CoinStatus() {
                 <Text
                     style={{
                         fontSize: 13,
-                        color: colors.secondary[600],
+                        color: colors.textSecondary,
                         marginTop: 2
                     }}
                 >
@@ -39,7 +39,7 @@ export function CoinStatus() {
                     style={{
                         fontFamily: "PoppinsBold",
                         fontSize: 20,
-                        color: colors.primary[400]
+                        color: colors.primary['default']
                     }}
                 >
                     {coins !== null ? `${currency} ${coins.toLocaleString('en-US')}` : "Loading..."}
@@ -52,7 +52,7 @@ export function CoinStatus() {
                         Alert.alert("Debug", "Use Money button clicked!")
                     }
                     style={{
-                        backgroundColor: colors.primary[300],
+                        backgroundColor: colors.primary['default'],
                         paddingHorizontal: 9,
                         paddingVertical: 4,
                         borderRadius: 50

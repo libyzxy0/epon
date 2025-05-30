@@ -63,7 +63,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                 >
                     <Text
                         style={{
-                            color: colors.secondary[400],
+                            color: colors.textSecondary,
                             fontSize: 12,
                             paddingLeft: 2
                         }}
@@ -74,15 +74,15 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                         onChangeText={setName}
                         defaultValue={name}
                         style={{
-                            backgroundColor: colors.secondary[100],
+                            backgroundColor: colors.cardSecondary,
                             color: colors.text,
                             paddingHorizontal: 15,
                             borderRadius: 7,
                             borderWidth: 1,
-                            borderColor: colors.secondary[200]
+                            borderColor: colors.border
                         }}
                         placeholder="Si Crush"
-                        placeholderTextColor={colors.secondary[400]}
+                        placeholderTextColor={colors.textSecondary}
                     />
                 </View>
 
@@ -94,7 +94,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                 >
                     <Text
                         style={{
-                            color: colors.secondary[400],
+                            color: colors.textSecondary,
                             fontSize: 12,
                             paddingLeft: 2
                         }}
@@ -107,15 +107,15 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                         multiline
                         numberOfLines={4}
                         style={{
-                            backgroundColor: colors.secondary[100],
+                            backgroundColor: colors.cardSecondary,
                             color: colors.text,
                             paddingHorizontal: 15,
                             borderRadius: 7,
                             borderWidth: 1,
-                            borderColor: colors.secondary[200]
+                            borderColor: colors.border
                         }}
                         placeholder="This is my f*cking description."
-                        placeholderTextColor={colors.secondary[400]}
+                        placeholderTextColor={colors.textSecondary}
                     />
                 </View>
                 <View
@@ -126,7 +126,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                 >
                     <Text
                         style={{
-                            color: colors.secondary[400],
+                            color: colors.textSecondary,
                             fontSize: 12,
                             paddingLeft: 2
                         }}
@@ -138,22 +138,22 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                         keyboardType={"number-pad"}
                         defaultValue={price}
                         style={{
-                            backgroundColor: colors.secondary[100],
+                            backgroundColor: colors.cardSecondary,
                             color: colors.text,
                             paddingHorizontal: 15,
                             borderRadius: 7,
                             borderWidth: 1,
-                            borderColor: colors.secondary[200]
+                            borderColor: colors.border
                         }}
                         placeholder="30000"
-                        placeholderTextColor={colors.secondary[400]}
+                        placeholderTextColor={colors.textSecondary}
                     />
                 </View>
 
                 <Pressable
                     onPress={handleCreateWish}
                     style={{
-                        backgroundColor: colors.primary[500],
+                        backgroundColor: colors.primary['default'],
                         justifyContent: "center",
                         alignItems: "center",
                         padding: 8,

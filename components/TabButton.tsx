@@ -3,8 +3,6 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Text } from '@/components/Themed'
 import { MaterialIcons, FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { usePathname } from "expo-router";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import Colors from "@/constants/Colors";
 
 const icons = {
     wishlist: props => <AntDesign name="star" size={24} {...props} />,
@@ -19,9 +17,6 @@ export default function TabButton({
     color,
     onPress
 }) {
-    const pathname = usePathname();
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
 
     return (
         <Pressable style={styles.container} onPress={onPress}>

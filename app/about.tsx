@@ -48,7 +48,7 @@ export default function About() {
             <Text
                 style={{
                     paddingVertical: 20,
-                    color: colors.red[500]
+                    color: colors.red[400]
                 }}
             >
                 {"Version: " + version}

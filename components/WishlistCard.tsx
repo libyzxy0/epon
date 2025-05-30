@@ -33,7 +33,7 @@ export function WishlistCard({
         <Pressable onLongPress={() => onPress(id)}>
             <View
                 style={{
-                    backgroundColor: colors.secondary[50],
+                    backgroundColor: colors.card,
                     paddingVertical: 10,
                     paddingHorizontal: 20,
                     borderRadius: 8
@@ -50,7 +50,7 @@ export function WishlistCard({
                 >
                     <Text
                         style={{
-                            color: colors[color][300],
+                            color: colors[color]['default'],
                             fontFamily: "PoppinsBold",
                             fontSize: 16
                         }}
@@ -61,7 +61,7 @@ export function WishlistCard({
                     <Text
                         style={{
                             paddingTop: 1,
-                            color: colors.primary[500],
+                            color: colors.primary['default'],
                             fontFamily: "PoppinsBold"
                         }}
                     >
@@ -71,7 +71,7 @@ export function WishlistCard({
                 </View>
                 <Text
                     style={{
-                        color: colors.secondary[500],
+                        color: colors.textSecondary,
                         marginVertical: 7
                     }}
                 >
@@ -91,10 +91,10 @@ export function WishlistCard({
                         justifyContent: "space-between",
                         gap: 5
                     }}>
-                        <Ionicons name="calendar-outline" size={15} color={colors.secondary[400]} />
+                        <Ionicons name="calendar-outline" size={15} color={colors.textSecondary} />
                         <Text
                             style={{
-                                color: colors.secondary[400],
+                                color: colors.textSecondary,
                                 fontSize: 12,
                                 paddingTop: 2
                             }}
@@ -107,7 +107,7 @@ export function WishlistCard({
                     </View>
                     <Text
                         style={{
-                            color: colors[color][300],
+                            color: colors[color]['default'],
                             marginTop: 2,
                             fontSize: 12
                         }}
@@ -127,7 +127,7 @@ export function WishlistCard({
                             height: 8,
                             borderRadius: 50,
                             width: "100%",
-                            backgroundColor: colors.secondary[300]
+                            backgroundColor: colors.cardSecondary
                         }}
                     />
 
@@ -138,7 +138,7 @@ export function WishlistCard({
                             height: 8,
                             borderRadius: 50,
                             width: progress ? `${progress}%` : "0%",
-                            backgroundColor: colors[color][300]
+                            backgroundColor: colors[color]['default']
                         }}
                     />
                 </View>

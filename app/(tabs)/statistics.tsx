@@ -61,29 +61,29 @@ function CutiePieChart({ chartData }) {
         {
             name: "₱5",
             amount: 9000,
-            color: colors.yellow[500],
-            legendFontColor: colors.yellow[500],
+            color: colors.yellow['default'],
+            legendFontColor: colors.yellow['default'],
             legendFontSize: 15
         },
         {
             name: "₱10",
             amount: 3000,
-            color: colors.red[500],
-            legendFontColor: colors.red[500],
+            color: colors.red['default'],
+            legendFontColor: colors.red['default'],
             legendFontSize: 15
         },
         {
             name: "₱20",
             amount: 4000,
-            color: colors.primary[400],
-            legendFontColor: colors.primary[400],
+            color: colors.primary['default'],
+            legendFontColor: colors.primary['default'],
             legendFontSize: 15
         },
         {
             name: "₱50",
             amount: 3500,
-            color: colors.blue[500],
-            legendFontColor: colors.blue[500],
+            color: colors.blue['default'],
+            legendFontColor: colors.blue['default'],
             legendFontSize: 15
         },
         {
@@ -101,14 +101,14 @@ function CutiePieChart({ chartData }) {
                 paddingHorizontal: 16,
                 paddingVertical: 15,
                 borderRadius: 9,
-                backgroundColor: colors.secondary[50]
+                backgroundColor: colors.card
             }}
         >
             <Text
                 style={{
                     fontFamily: "PoppinsBold",
                     fontSize: 16,
-                    color: colors.primary[400]
+                    color: colors.primary['default']
                 }}
             >
                 Most Saved Coin
@@ -118,10 +118,10 @@ function CutiePieChart({ chartData }) {
                 width={289}
                 height={180}
                 chartConfig={{
-                    color: () => colors.primary[300]
+                    color: () => colors.primary['default']
                 }}
                 accessor={"amount"}
-                backgroundColor={colors.secondary[50]}
+                backgroundColor={colors.card}
                 center={[0, 5]}
                 absolute
             />
@@ -144,14 +144,14 @@ function BezierChart({
                 paddingHorizontal: 16,
                 paddingVertical: 15,
                 borderRadius: 9,
-                backgroundColor: colors.secondary[50]
+                backgroundColor: colors.card
             }}
         >
             <Text
                 style={{
                     fontFamily: "PoppinsBold",
                     fontSize: 16,
-                    color: colors.primary[400]
+                    color: colors.primary['default']
                 }}
             >
                 Montly Coins
@@ -178,23 +178,23 @@ function BezierChart({
                     yAxisInterval={1}
                     chartConfig={{
                         propsForBackgroundLines: {
-                            stroke: colors.secondary[300]
+                            stroke: colors.textTertiary
                         },
-                        backgroundColor: colors.secondary[50],
-                        backgroundGradientFrom: colors.secondary[50],
-                        backgroundGradientTo: colors.secondary[100],
+                        backgroundColor: colors.card,
+                        backgroundGradientFrom: colors.card,
+                        backgroundGradientTo: colors.cardSecondary,
                         decimalPlaces: 2,
                         color: (opacity = 1) =>
                             colors.text,
                         labelColor: (opacity = 1) =>
-                            colors.secondary[800],
+                            colors.text,
                         style: {
                             borderRadius: 16
                         },
                         propsForDots: {
                             r: "6",
                             strokeWidth: "2",
-                            stroke: colors.primary[400]
+                            stroke: colors.primary['default']
                         }
                     }}
                     bezier={isBezier}
@@ -224,14 +224,14 @@ function BarExamChart({
                 paddingHorizontal: 16,
                 paddingVertical: 15,
                 borderRadius: 9,
-                backgroundColor: colors.secondary[50]
+                backgroundColor: colors.card
             }}
         >
             <Text
                 style={{
                     fontFamily: "PoppinsBold",
                     fontSize: 16,
-                    color: colors.primary[400]
+                    color: colors.primary['default']
                 }}
             >
                 Daily Coins
@@ -258,22 +258,22 @@ function BarExamChart({
                     yAxisInterval={1}
                     chartConfig={{
                         propsForBackgroundLines: {
-                            stroke: colors.secondary[300]
+                            stroke: colors.textTertiary
                         },
-                        backgroundColor: colors.secondary[50],
-                        backgroundGradientFrom: colors.secondary[50],
-                        backgroundGradientTo: colors.secondary[100],
+                        backgroundColor: colors.card,
+                        backgroundGradientFrom: colors.card,
+                        backgroundGradientTo: colors.cardSecondary,
                         decimalPlaces: 2,
-                        color: (opacity = 1) => colors.primary[300],
+                        color: (opacity = 1) => colors.primary['default'],
                         labelColor: (opacity = 1) =>
-                            colors.secondary[800],
+                            colors.text,
                         style: {
                             borderRadius: 16
                         },
                         propsForDots: {
                             r: "6",
                             strokeWidth: "2",
-                            stroke: colors.primary[400]
+                            stroke: colors.primary['default']
                         }
                     }}
                     bezier={isBezier}

@@ -59,7 +59,7 @@ export function SaveCoin() {
                     paddingHorizontal: 16,
                     paddingVertical: 10,
                     borderRadius: 9,
-                    backgroundColor: colors.secondary[50]
+                    backgroundColor: colors.card
                 }}
             >
                 <View
@@ -86,7 +86,7 @@ export function SaveCoin() {
                             style={{
                                 fontFamily: "PoppinsItalic",
                                 fontSize: 12,
-                                color: colors.secondary[600],
+                                color: colors.textSecondary,
                                 marginTop: 4
                             }}
                         >
@@ -153,8 +153,8 @@ export function SaveCoin() {
                         }
                         style={{
                             borderWidth: 2,
-                            borderColor: colors.blue[100],
-                            backgroundColor: colors.blue[50],
+                            borderColor: colors.blue['secondary'],
+                            backgroundColor: colors.blue['lowOpacity'],
                             flex: 1,
                             borderRadius: 9,
                             paddingHorizontal: 16,
@@ -168,7 +168,7 @@ export function SaveCoin() {
                         <Text
                             style={{
                                 fontSize: 12,
-                                color: colors.blue[400],
+                                color: colors.blue['default'],
                                 paddingRight: 2,
                                 paddingTop: 1.5
                             }}
@@ -202,8 +202,8 @@ function CoinButton({
             onPress={onPress}
             style={{
                 borderWidth: 2,
-                borderColor: colors[color][100],
-                backgroundColor: colors[color][50],
+                borderColor: colors[color]['secondary'],
+                backgroundColor: colors[color]['lowOpacity'],
                 borderRadius: 9,
                 paddingHorizontal: 16,
                 paddingVertical: 4,
@@ -215,7 +215,7 @@ function CoinButton({
             <Text
                 style={{
                     fontSize: 12,
-                    color: colors[color][400],
+                    color: colors[color]['default'],
                     paddingRight: 2,
                     paddingTop: 1.5
                 }}

@@ -22,17 +22,17 @@ export function CalendarTracker() {
         "2025-05-01": {
             marked: false,
             selected: true,
-            selectedColor: colors.secondary[300]
+            selectedColor: colors.textTertiary
         },
         "2025-05-02": {
             marked: false,
             selected: true,
-            selectedColor: colors.secondary[300]
+            selectedColor: colors.textTertiary
         },
         "2025-05-03": {
             marked: false,
             selected: true,
-            selectedColor: colors.primary[300]
+            selectedColor: colors.primary['default']
         }
     };
 
@@ -42,7 +42,7 @@ export function CalendarTracker() {
                 marginTop: 20,
                 paddingVertical: 10,
                 borderRadius: 9,
-                backgroundColor: colors.secondary[50],
+                backgroundColor: colors.card,
                 paddingHorizontal: 4
             }}
         >
@@ -93,7 +93,7 @@ export function CalendarTracker() {
                     >
                         <View
                             style={{
-                                backgroundColor: colors.primary[300],
+                                backgroundColor: colors.primary['default'],
                                 height: 15,
                                 width: 15,
                                 borderRadius: 20
@@ -101,7 +101,7 @@ export function CalendarTracker() {
                         />
                         <Text
                             style={{
-                                color: colors.primary[300],
+                                color: colors.primary['default'],
                                 paddingTop: 2.5
                             }}
                         >
@@ -119,7 +119,7 @@ export function CalendarTracker() {
                     >
                         <View
                             style={{
-                                backgroundColor: colors.secondary[300],
+                                backgroundColor: colors.textTertiary,
                                 height: 15,
                                 width: 15,
                                 borderRadius: 20
@@ -127,7 +127,7 @@ export function CalendarTracker() {
                         />
                         <Text
                             style={{
-                                color: colors.secondary[300],
+                                color: colors.textTertiary,
                                 paddingTop: 2.5
                             }}
                         >
@@ -144,14 +144,14 @@ export function CalendarTracker() {
                     renderHeader={() => null}
                     theme={{
                         monthTextColor: colors.text,
-                        backgroundColor: colors.secondary[50],
-                        calendarBackground: colors.secondary[50],
-                        textSectionTitleColor: colors.primary[400],
-                        selectedDayBackgroundColor: colors.secondary[50],
+                        backgroundColor: colors.card,
+                        calendarBackground: colors.card,
+                        textSectionTitleColor: colors.primary['default'],
+                        selectedDayBackgroundColor: colors.card,
                         selectedDayTextColor: colors.text,
-                        todayTextColor: colors.primary[400],
-                        dayTextColor: colors.secondary[800],
-                        textDisabledColor: colors.secondary[400]
+                        todayTextColor: colors.primary['default'],
+                        dayTextColor: colors.text,
+                        textDisabledColor: colors.textTertiary
                     }}
                     markedDates={datesData}
                 />

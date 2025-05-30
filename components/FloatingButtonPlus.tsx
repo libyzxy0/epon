@@ -20,8 +20,8 @@ export function FloatingButtonPlus({ onPress }: { onPress: () => {}}) {
       <Pressable onPress={onPress} style={ {
         height: 50,
         width: 50,
-        backgroundColor: colors.secondary[50],
-        borderColor: colors.primary[300],
+        backgroundColor: colors.card,
+        borderColor: colors.primary['default'],
         borderWidth: 2,
         borderRadius: 50,
         alignItems: 'center',
@@ -31,7 +31,7 @@ export function FloatingButtonPlus({ onPress }: { onPress: () => {}}) {
         right: 25,
         zIndex: 30
       }}>
-        <Feather name="plus" size={26} color={colors.primary[300]} />
+        <Feather name="plus" size={26} color={colors.primary['default']} />
       </Pressable>
   )
 }

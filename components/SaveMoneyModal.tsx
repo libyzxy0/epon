@@ -41,7 +41,7 @@ export function SaveMoneyModal({
             >
                 <View
                     style={{
-                        backgroundColor: colors.secondary[50],
+                        backgroundColor: colors.card,
                         borderRadius: 12,
                         padding: 20,
                         margin: 20,
@@ -72,7 +72,7 @@ export function SaveMoneyModal({
                         <Text
                             style={{
                                 fontSize: 16,
-                                color: colors.secondary[400],
+                                color: colors.textSecondary,
                                 marginBottom: 20,
                                 textAlign: "center"
                             }}
@@ -81,7 +81,7 @@ export function SaveMoneyModal({
                             <Text
                                 style={{
                                     fontFamily: "PoppinsBold",
-                                    color: colors.primary[400]
+                                    color: colors.primary['default']
                                 }}
                             >{`${amount} coins`}</Text>
                             {` Are you sure?`}
@@ -90,7 +90,7 @@ export function SaveMoneyModal({
                         <Text
                             style={{
                                 fontSize: 16,
-                                color: colors.secondary[400],
+                                color: colors.textSecondary,
                                 marginBottom: 20,
                                 textAlign: "center"
                             }}
@@ -106,17 +106,17 @@ export function SaveMoneyModal({
                         >
                             <TextInput
                                 keyboardType={"number-pad"}
-                                placeholderTextColor={colors.secondary[400]}
+                                placeholderTextColor={colors.textSecondary}
                                 style={{
-                                    backgroundColor: colors.secondary[50],
-                       borderWidth: 1.5,
-                       borderColor: colors.secondary[100],
+                                    backgroundColor: colors.cardSecondary,
+                       borderWidth: 1,
+                       borderColor: colors.border,
                                     borderRadius: 8,
                                     paddingHorizontal: 15,
                                     color: colors.text
                                 }}
                                 placeholder="1000"
-                                cursorColor={colors.primary[400]}
+                                cursorColor={colors.primary['default']}
                                 onChangeText={onChangeAmmount}
                                 value={inputAmmount}
                             />
@@ -134,16 +134,16 @@ export function SaveMoneyModal({
                             style={{
                                 flex: 1,
                                borderWidth: 1,
-                                    borderColor: colors.secondary[300], paddingVertical: 8,
+                                    borderColor: colors.border, paddingVertical: 8,
                                 borderRadius: 8,
                                 alignItems: "center",
-                                backgroundColor: colors.secondary[200]
+                                backgroundColor: colors.cardSecondary
                             }}
                             onPress={handleCancel}
                         >
                             <Text
                                 style={{
-                                    color: colors.secondary[500],
+                                    color: colors.text,
                                     fontSize: 14,
                                     fontFamily: "PoppinsBold",
                                     
@@ -156,10 +156,10 @@ export function SaveMoneyModal({
                         <Pressable
                             style={{
                                 flex: 1,
-                                paddingVertical: 7,
+                                paddingVertical: 9,
                                 borderRadius: 8,
                                 alignItems: "center",
-                                backgroundColor: colors.primary[300]
+                                backgroundColor: colors.primary['default']
                             }}
                             onPress={handleConfirm}
                         >

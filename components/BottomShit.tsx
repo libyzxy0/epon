@@ -24,10 +24,10 @@ export const BottomShit = forwardRef<Ref, Props>((props, ref) => {
             snapPoints={props.snapPoints}
             enablePanDownToClose
             backgroundStyle={{
-                backgroundColor: colors.secondary[50]
+                backgroundColor: colors.card
             }}
             handleIndicatorStyle={{
-             backgroundColor: colors.primary[400]
+             backgroundColor: colors.primary['default']
             }}
         >
             <BottomSheetView style={props?.containerStyle}>{props.children}</BottomSheetView>

@@ -13,13 +13,13 @@ export function CustomLoading({ text }) {
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: colors.secondary[50]
+                backgroundColor: colors.card
             }}
         >
-            <ActivityIndicator size="large" color={colors.primary[400]} />
+            <ActivityIndicator size="large" color={colors.primary['default']} />
             <Text style={{
               marginTop: 20,
-              color: colors.secondary[400]
+              color: colors.textSecondary
             }}>{text}</Text>
         </View>
     );

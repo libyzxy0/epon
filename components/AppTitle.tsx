@@ -27,12 +27,13 @@ export default function AppTitle() {
         >
             <View>
                 <Image
+                   
                     style={{
                         height: 50,
                         width: 50
                     }}
                     source={logo}
-                    contentFit="cover"
+                    contentFit="contain"
                 />
             </View>
             <View>

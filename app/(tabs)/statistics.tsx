@@ -38,6 +38,10 @@ import {
 import {
   useCoinStore
 } from '@/store/useCoinStore'
+import {
+  Image
+} from "expo-image";
+import noDataSvg from "@/assets/images/No_data-rafiki.svg";
 
 export default function Statistics() {
   const theme = useColorScheme() ?? "light";
@@ -103,81 +107,82 @@ export default function Statistics() {
   }, [transactions]);
 
 
-const dayChartData = useMemo(() => {
-  const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  
-  if (!transactions || transactions.length === 0) {
+  const dayChartData = useMemo(() => {
+    const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    if (!transactions || transactions.length === 0) {
+      return {
+        labels: weekLabels,
+        data: Array(7).fill(0)
+      };
+    }
+
+    const today = new Date();
+    const currentDay = today.getDay();
+    const mondayOffset = currentDay === 0 ? -6: 1 - currentDay;
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() + mondayOffset);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const currentWeekTransactions = transactions.filter(t => {
+      const transactionDate = new Date(t.created_at);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
+    });
+
+    const totals = Array(7).fill(0);
+    currentWeekTransactions.forEach((t) => {
+      const transactionDate = new Date(t.created_at);
+      const daysDiff = Math.floor((transactionDate - startOfWeek) / (1000 * 60 * 60 * 24));
+      if (daysDiff >= 0 && daysDiff < 7) {
+        totals[daysDiff] += t.amount;
+      }
+    });
+
     return {
       labels: weekLabels,
-      data: Array(7).fill(0)
+      data: totals
     };
-  }
+  }, [transactions]);
 
-  const today = new Date();
-  const currentDay = today.getDay();
-  const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() + mondayOffset);
-  startOfWeek.setHours(0, 0, 0, 0);
+  const monthChartData = useMemo(() => {
+    const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  const currentWeekTransactions = transactions.filter(t => {
-    const transactionDate = new Date(t.created_at);
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-    endOfWeek.setHours(23, 59, 59, 999);
-    
-    return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
-  });
-
-  const totals = Array(7).fill(0);
-  currentWeekTransactions.forEach((t) => {
-    const transactionDate = new Date(t.created_at);
-    const daysDiff = Math.floor((transactionDate - startOfWeek) / (1000 * 60 * 60 * 24));
-    if (daysDiff >= 0 && daysDiff < 7) {
-      totals[daysDiff] += t.amount;
+    if (!transactions || transactions.length === 0) {
+      return {
+        labels: monthLabels,
+        data: Array(12).fill(0)
+      };
     }
-  });
 
-  return {
-    labels: weekLabels,
-    data: totals
-  };
-}, [transactions]);
+    const totals = Array(12).fill(0);
 
-const monthChartData = useMemo(() => {
-  const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    transactions.forEach((t) => {
+      const monthIndex = new Date(t.created_at).getMonth();
+      totals[monthIndex] += t.amount;
+    });
 
-  if (!transactions || transactions.length === 0) {
+    const currentMonthIndex = new Date().getMonth();
+
+    const rotatedLabels = [
+      ...monthLabels.slice(currentMonthIndex),
+      ...monthLabels.slice(0, currentMonthIndex)
+    ];
+
+    const rotatedData = [
+      ...totals.slice(currentMonthIndex),
+      ...totals.slice(0, currentMonthIndex)
+    ];
+
     return {
-      labels: monthLabels,
-      data: Array(12).fill(0)
+      labels: rotatedLabels,
+      data: rotatedData
     };
-  }
-
-  const totals = Array(12).fill(0); 
-
-  transactions.forEach((t) => {
-    const monthIndex = new Date(t.created_at).getMonth(); 
-    totals[monthIndex] += t.amount;
-  });
-
-  const currentMonthIndex = new Date().getMonth();
-
-  const rotatedLabels = [
-    ...monthLabels.slice(currentMonthIndex),
-    ...monthLabels.slice(0, currentMonthIndex)
-  ];
-
-  const rotatedData = [
-    ...totals.slice(currentMonthIndex),
-    ...totals.slice(0, currentMonthIndex)
-  ];
-
-  return {
-    labels: rotatedLabels,
-    data: rotatedData
-  };
-}, [transactions]);
+  },
+    [transactions]);
 
 
 
@@ -189,30 +194,48 @@ const monthChartData = useMemo(() => {
       }}
       >
       <AppTitle />
-      <ScrollView
-        contentContainerStyle={ { flexGrow: 1,
-          paddingBottom: 95 }}
-        >
-        <View
-          style={ {
-            marginTop: 20,
-            marginHorizontal: 20
-          }}
+
+      {transactions && transactions.length > 0 ? (
+        <ScrollView
+          contentContainerStyle={ { flexGrow: 1,
+            paddingBottom: 95 }}
           >
-          <Text
+          <View
             style={ {
-              fontFamily: "PoppinsBold",
-              fontSize: 23,
-              marginLeft: 5
+              marginTop: 20,
+              marginHorizontal: 20
             }}
             >
-            Statistics
-          </Text>
-          <MostSavedCoinChart chartData={mostSavedCoin} />
-          <DailyCoinChart chartData={dayChartData} />
-          <MonthlyCoinChart chartData={monthChartData} />
+            <Text
+              style={ {
+                fontFamily: "PoppinsBold",
+                fontSize: 23,
+                marginLeft: 5
+              }}
+              >
+              Statistics
+            </Text>
+            <MostSavedCoinChart chartData={mostSavedCoin} />
+            <DailyCoinChart chartData={dayChartData} />
+            <MonthlyCoinChart chartData={monthChartData} />
+          </View>
+        </ScrollView>
+      ): (
+        <View style={ {
+          flex: 1,
+          alignItems: 'center',
+          marginTop: 120
+        }}>
+          <Image style={ {
+            height: 250,
+            width: 250
+          }} source={noDataSvg} />
+
+          <Text style={ {
+            marginTop: 5
+          }}>You don't have transactions data yet.</Text>
         </View>
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

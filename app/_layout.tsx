@@ -106,14 +106,12 @@ export default function RootLayout() {
                     now()
                 );
                 console.log("Coin initialized!");
-            } else {
-                // console.log(JSON.stringify(coin, null, 2) + "\n");
             }
         }
     };
 
     return (
-        <Suspense fallback={<CustomLoading text="Loading..." />}>
+        <Suspense fallback={<CustomLoading text="Loading application..." />}>
             <SQLiteProvider
                 databaseName={DATABASE_NAME}
                 onInit={migrateDB}

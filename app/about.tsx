@@ -1,88 +1,43 @@
-import { Text, View } from "@/components/Themed";
-import { Pressable, Alert } from "react-native";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { useEffect, useState } from "react";
+import {
+  Text,
+  View
+} from "@/components/Themed";
+import {
+  useColorScheme
+} from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
-import { useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
-import { useCoinStore } from '@/store/useCoinStore'
+import {
+  SafeAreaView
+} from "react-native-safe-area-context";
+import {
+  Image
+} from 'expo-image'
+import logo from "@/assets/images/logo.png";
+import * as Application from 'expo-application';
 
 export default function About() {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
-    const db = useSQLiteContext();
-    const {coins} = useCoinStore();
-    
-    const [version, setVersion] = useState("");
-    const [data, setData] = useState();
-    useEffect(() => {
-        async function setup() {
-            const result = await db.getFirstAsync<{
-                "sqlite_version()": string;
-            }>("SELECT sqlite_version()");
-            setVersion(result["sqlite_version()"]);
-            const allRows = await db.getAllAsync('SELECT * FROM transactions;');
-            setData(allRows)
-        }
-        setup();
-    }, []);
-    const handleButtonClick = async () => {
-        
-    };
-    return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center"
-            }}
-        >
-            <Text
-                style={{
-                    fontFamily: "PoppinsBold",
-                    fontSize: 23
-                }}
-            >
-                Simple Test Data
-            </Text>
+  const theme = useColorScheme() ?? "light";
+  const colors = Colors[theme];
 
-            <Text
-                style={{
-                    paddingVertical: 20,
-                    color: colors.red['default']
-                }}
-            >
-                {"Version: " + version}
-                {"\nData:" + (JSON.stringify(data, null, 2) + "\n")}
-                {"\nCoins:" + coins}
-            </Text>
+  return (
+    <SafeAreaView
+      style={ {
+        flex: 1,
+        backgroundColor: colors.background
+      }}
+      >
 
-            <Pressable
-                onPress={handleButtonClick}
-                style={{
-                    borderWidth: 2,
-                    borderColor: colors["blue"][100],
-                    backgroundColor: colors["blue"][50],
-                    borderRadius: 9,
-                    paddingHorizontal: 18,
-                    paddingVertical: 6,
-                    margin: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 10
-                }}
-            >
-                <Text
-                    style={{
-                        fontSize: 16,
-                        color: colors["blue"][400],
-                        paddingRight: 2,
-                        paddingTop: 1.5,
-                        fontFamily: "PoppinsBold"
-                    }}
-                >
-                    Click Me
-                </Text>
-            </Pressable>
-        </View>
-    );
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <Image style={ {
+          height: 150,
+          width: 150
+        }} contentFit="cover" source={logo} />
+        <Text>{Application.applicationName} version: {Application.nativeApplicationVersion}</Text>
+      </View>
+
+    </SafeAreaView>
+  );
 }

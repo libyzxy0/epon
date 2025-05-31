@@ -159,6 +159,17 @@ function RootLayoutNav() {
                             }
                         }}
                     />
+                    <Stack.Screen
+                        name="about"
+                        options={{
+                            headerShown: true,
+                            title: "About",
+                            animation: "fade",
+                            headerStyle: {
+                                backgroundColor: colors.background
+                            }
+                        }}
+                    />
                 </Stack>
             </GestureHandlerRootView>
         </ThemeProvider>

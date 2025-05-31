@@ -47,7 +47,7 @@ export default function Statistics() {
     coins
   } = useCoinStore();
   const [transactions,
-    setTransactions] = useState();
+    setTransactions] = useState(null);
 
   const db = useSQLiteContext();
 
@@ -102,11 +102,10 @@ export default function Statistics() {
     });
   }, [transactions]);
 
-  
 
 const dayChartData = useMemo(() => {
   const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
+  
   if (!transactions || transactions.length === 0) {
     return {
       labels: weekLabels,
@@ -114,23 +113,34 @@ const dayChartData = useMemo(() => {
     };
   }
 
-  const totals = Array(7).fill(0);
+  const today = new Date();
+  const currentDay = today.getDay();
+  const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() + mondayOffset);
+  startOfWeek.setHours(0, 0, 0, 0);
 
-  transactions.forEach((t) => {
-    const jsDay = new Date(t.created_at).getDay();
-    const index = jsDay === 0 ? 6 : jsDay - 1;
-    totals[index] += t.amount;
+  const currentWeekTransactions = transactions.filter(t => {
+    const transactionDate = new Date(t.created_at);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+    
+    return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
   });
 
-  const todayJS = new Date().getDay();
-  const todayIndex = todayJS === 0 ? 6 : todayJS - 1;
-
-  const rotatedLabels = [...weekLabels.slice(todayIndex), ...weekLabels.slice(0, todayIndex)];
-  const rotatedData = [...totals.slice(todayIndex), ...totals.slice(0, todayIndex)];
+  const totals = Array(7).fill(0);
+  currentWeekTransactions.forEach((t) => {
+    const transactionDate = new Date(t.created_at);
+    const daysDiff = Math.floor((transactionDate - startOfWeek) / (1000 * 60 * 60 * 24));
+    if (daysDiff >= 0 && daysDiff < 7) {
+      totals[daysDiff] += t.amount;
+    }
+  });
 
   return {
-    labels: rotatedLabels,
-    data: rotatedData
+    labels: weekLabels,
+    data: totals
   };
 }, [transactions]);
 

@@ -26,6 +26,7 @@ import { useCoinActions } from "@/hooks/useCoinsActions";
 import Storage from "expo-sqlite/kv-store";
 import { Appearance } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { now } from '@/utils/getDeviceTime'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -33,7 +34,6 @@ export {
 } from "expo-router";
 
 export const unstable_settings = {
-    // Ensure that reloading on `/modal` keeps a back button present.
     initialRouteName: "(tabs)"
 };
 
@@ -89,11 +89,6 @@ export default function RootLayout() {
             await db.execAsync(create_coin_table);
             await db.execAsync(create_transactions_table);
             await db.execAsync(create_wishlist_table);
-
-            const now = () =>
-                new Date().toLocaleString("sv-SE").replace(" ", "T") +
-                "." +
-                String(new Date().getMilliseconds()).padStart(3, "0");
 
             const coin = await db.getFirstAsync("SELECT * FROM coins;");
             if (coin === null) {

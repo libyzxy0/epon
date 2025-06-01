@@ -39,7 +39,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                 paddingHorizontal: 20,
                 zIndex: 40
             }}
-            snapPoints={["80%"]}
+            snapPoints={["60%"]}
             ref={ref}
         >
             <Text
@@ -154,7 +154,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                 </View>
 
                 <TouchableOpacity activeOpacity={0.7}
-                    onPress={handleCreateWish}
+                    onPress={() => handleCreateWish()}
                     style={{
                         backgroundColor: colors.primary['default'],
                         justifyContent: "center",

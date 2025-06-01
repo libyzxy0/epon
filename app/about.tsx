@@ -32,10 +32,10 @@ export default function About() {
       color: colors.text
     },
     {
-      name: 'Twitter',
-      icon: 'twitter',
-      url: 'https://twitter.com/libyzxy0',
-      color: colors.blue.default
+      name: 'Instagram',
+      icon: 'instagram',
+      url: 'https://instragram.com/@libyzxy0',
+      color: colors.red.default
     },
     {
       name: 'Facebook',
@@ -175,34 +175,34 @@ export default function About() {
         }}>
           <Text style={{
             color: colors.text,
-            fontSize: 18,
-            fontWeight: '600',
+            fontSize: 16,
+            fontFamily: 'PoppinsBold',
             marginBottom: 15
           }}>
             Developer
           </Text>
           <Text style={{
-            color: colors.textSecondary,
-            fontSize: 16,
+            color: colors.text,
+            fontSize: 14,
             marginBottom: 20
           }}>
-            Developed with ❤️ by{' '}
+            Jan Liby Dela Costa{" "}
             <Text style={{
               color: colors.primary.default,
-              fontWeight: '600'
+              fontFamily: 'PoppinsBold'
             }}>
               @libyzxy0
             </Text>
+            <Text style={{
+              color: colors.textSecondary,
+              fontSize: 12
+            }}>{"\n"}- Full-Stack Developer</Text>
+            <Text style={{
+              color: colors.textSecondary,
+              fontSize: 12
+            }}>{"\n"}- Grade 12 ICT student from La Concepcion College</Text>
           </Text>
 
-          <Text style={{
-            color: colors.text,
-            fontSize: 16,
-            fontWeight: '600',
-            marginBottom: 15
-          }}>
-            Connect with the developer
-          </Text>
           <View style={{
             flexDirection: 'row',
             flexWrap: 'wrap',

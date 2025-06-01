@@ -4,6 +4,7 @@ import {
 import {
   useCoinStore
 } from "@/store/useCoinStore";
+import { now } from '@/utils/getDeviceTime'
 
 export function useCoinActions() {
   const db = useSQLiteContext();
@@ -26,7 +27,6 @@ export function useCoinActions() {
 
   const saveCoin = async (amount: number) => {
     const newAmount = coins + amount;
-    const now = () => new Date().toLocaleString('sv-SE').replace(' ', 'T') + '.' + String(new Date().getMilliseconds()).padStart(3, '0');
 
     if (typeof amount == "number") {
       await db.runAsync(
@@ -45,7 +45,7 @@ export function useCoinActions() {
 
       try {
         let result = await statement.executeAsync({
-          $name: "Save money",
+          $name: "Save coin",
           $description: `Saves ${currency}${amount} amount of money at ${new Date(now()).toLocaleDateString('en-US', {
             weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
           })}`,
@@ -55,9 +55,15 @@ export function useCoinActions() {
         });
         await statement.finalizeAsync();
 
-        console.log(result)
+        return {
+          success: true,
+          error: null
+        }
       } catch (error) {
-        console.log("Failed to create transaction:", error)
+        return {
+          success: false,
+          error: error?.message || "Failed to create transaction."
+        }
       }
 
     }
@@ -72,42 +78,41 @@ export function useCoinActions() {
     }
 
     const newAmount = coins - amount;
-    const now = new Date().toISOString();
 
     await db.runAsync(
-      `UPDATE coins SET amount = ?, last_update = ? WHERE id = 1;`,
+      `UPDATE coins SET amount = ?, last_update = ?`,
       newAmount,
-      now
+      now()
     ); /* Safe? probably not (: */
 
 
-    const statement = await db.prepareAsync(
+    const stmt = await db.prepareAsync(
       "INSERT INTO transactions (name, description, transaction_type, amount, created_at) VALUES ($name, $description, $transaction_type, $amount, $created_at)"
     );
 
     try {
-      let result = await statement.executeAsync({
-        $name: "Use money",
-        $description: `Uses ${currency}${amount} amount of money at ${new Date(now()).toLocaleDateString('en-US', {
-          weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
-        })} NOTE: ${note}`,
+      let result = await stmt.executeAsync({
+        $name: "Use coin",
+        $description: note ? note : `Use ${currency}${amount} coin.`,
         $transaction_type: "use",
         $amount: amount,
         $created_at: now()
       });
-      await statement.finalizeAsync();
+      await stmt.finalizeAsync();
+      return {
+        success: true,
+        error: null
+      }
     } catch (error) {
-      console.log("Failed to create transaction:", error)
+      return {
+        success: false,
+        error: error?.message || "Failed to create transaction."
+      }
+    } finally {
+      setCoins({
+        coins: newAmount, last_update: now()
+      })
     }
-
-    setCoins({
-      coins: newAmount, last_update: now
-    });
-
-    return {
-      success: true,
-      error: null
-    };
   };
 
   return {

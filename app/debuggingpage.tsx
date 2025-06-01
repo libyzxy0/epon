@@ -27,22 +27,29 @@ export default function About() {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
   const db = useSQLiteContext();
-  const {
-    coins
-  } = useCoinStore();
-
   const [version,
     setVersion] = useState("");
-  const [data,
-    setData] = useState();
+  const [transactions,
+    setTransactions] = useState([]);
+  const [coin,
+    setCoin] = useState({});
+  const [wishlist,
+    setWishlist] = useState([]);
+    
   useEffect(() => {
     async function setup() {
-      const result = await db.getFirstAsync < {
+      const ver = await db.getFirstAsync < {
         "sqlite_version()": string;
       } > ("SELECT sqlite_version()");
-      setVersion(result["sqlite_version()"]);
-      const allRows = await db.getAllAsync('SELECT * FROM transactions;');
-      setData(allRows)
+      setVersion(ver["sqlite_version()"]);
+      
+      const coin = await db.getFirstAsync("SELECT * from coins;");
+      setCoin(coin);
+      
+      const transactions = await db.getAllAsync('SELECT * FROM transactions;');
+      setTransactions(transactions)
+      const wishlist = await db.getAllAsync('SELECT * FROM wishlist;');
+      setWishlist(wishlist)
     }
     setup();
   }, []);
@@ -52,57 +59,66 @@ export default function About() {
       style={ {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        paddingHorizontal: 20
       }}
       >
       <ScrollView>
         <Text
           style={ {
             fontFamily: "PoppinsBold",
-            fontSize: 23
+            fontSize: 23,
+            marginTop: 20
           }}
           >
-          Simple Test Data
+          Database Data
         </Text>
 
+        <Text
+          style={ {
+            paddingVertical: 20,
+            color: colors.yellow['default'],
+            fontFamily: 'PoppinsBold',
+          }}
+          >
+           {"SQLite Version: " + version}
+        </Text>
         <Text
           style={ {
             paddingVertical: 20,
             color: colors.red['default']
           }}
           >
-          {"Version: " + version}
-          {"\nData:" + (JSON.stringify(data, null, 2) + "\n")}
-          {"\nCoins:" + coins}
+          <Text style={{
+            fontFamily: 'PoppinsBold',
+            color: colors.red['default']
+          }}>Transactions {" "}</Text>
+          {(JSON.stringify(transactions, null, 2) + "\n")}
         </Text>
-
-        <Pressable
-          onPress={handleButtonClick}
+        <Text
           style={ {
-            borderWidth: 2,
-            borderColor: colors["blue"]['lowOpacity'],
-            backgroundColor: colors["blue"][50],
-            borderRadius: 9,
-            paddingHorizontal: 18,
-            paddingVertical: 6,
-            margin: 5,
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 10
+            paddingVertical: 20,
+            color: colors.blue['default']
           }}
           >
-          <Text
-            style={ {
-              fontSize: 16,
-              color: colors["blue"]['default'],
-              paddingRight: 2,
-              paddingTop: 1.5,
-              fontFamily: "PoppinsBold"
-            }}
-            >
-            Click Me
-          </Text>
-        </Pressable>
+          <Text style={{
+            fontFamily: 'PoppinsBold',
+            color: colors.blue['default']
+          }}>Wishlist {" "}</Text>
+          {(JSON.stringify(wishlist, null, 2) + "\n")}
+        </Text>
+        <Text
+          style={ {
+            paddingVertical: 20,
+            color: colors.primary['default']
+          }}
+          >
+          <Text style={{
+            fontFamily: 'PoppinsBold',
+            color: colors.primary['default']
+          }}>Coin {" "}</Text>
+          {(JSON.stringify(coin, null, 2) + "\n")}
+        </Text>
       </ScrollView>
     </View>
   );

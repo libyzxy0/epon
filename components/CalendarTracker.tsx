@@ -51,7 +51,6 @@ export function CalendarTracker() {
     const loadTransactions = async () => {
       const transacs = await db.getAllAsync('SELECT * FROM transactions;');
       setTransactions(transacs);
-      console.log("Transactions loaded:", transactions.length)
     }
     loadTransactions();
   }, [coins])

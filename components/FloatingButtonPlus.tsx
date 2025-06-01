@@ -29,7 +29,7 @@ export function FloatingButtonPlus({ onPress }: { onPress: () => {}}) {
         position: 'absolute',
         bottom: 100,
         right: 25,
-        zIndex: 30
+        zIndex: 0
       }}>
         <Feather name="plus" size={26} color={colors.primary['default']} />
       </TouchableOpacity>

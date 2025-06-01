@@ -24,14 +24,13 @@ export function MostSavedCoinChart({
         paddingVertical: 15,
         borderRadius: 9,
         backgroundColor: colors.card,
-        alignItems: 'center'
       }}
       >
       <Text
         style={ {
           fontFamily: "PoppinsBold",
           fontSize: 16,
-          color: colors.text,
+          color: colors.primary.default,
         }}
         >
         Most Saved Coin
@@ -45,7 +44,7 @@ export function MostSavedCoinChart({
         }}
         accessor={"amount"}
         backgroundColor={colors.card}
-        paddingLeft={30}
+        paddingLeft={25}
         center={[0, 5]}
         absolute
         />

@@ -47,6 +47,13 @@ import {
   Image
 } from "expo-image";
 import wishSvg from "@/assets/images/Empty-pana.svg";
+import BottomSheet from "@gorhom/bottom-sheet";
+import {
+  DeleteConfirmationModal
+} from '@/components/DeleteConfirmationModal';
+import {
+  ConfirmationModal
+} from '@/components/ConfirmationModal';
 
 const handleColor = (progress: number): string => {
   if (progress < 25) {
@@ -64,9 +71,13 @@ export default function Wishlist() {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
   const coins = useCoinStore(state => state.coins);
+  const currency = useCoinStore(state => state.currency);
 
   const {
-    fetchWishlist
+    fetchWishlist,
+    markAsBought,
+    removeWish,
+    loading
   } = useWishlistActions();
   const {
     wishlist
@@ -95,6 +106,45 @@ export default function Wishlist() {
 
   const bottomSheetRef = useRef < BottomSheet > (null);
 
+  const [pwish,
+    setPWish] = useState(null);
+  const [bwish,
+    setBWish] = useState(null);
+
+  const handleWishAction = (data) => {
+    setPWish(data);
+  }
+
+  const onConfirmDeletion = async () => {
+    const {
+      success,
+      error
+    } = await removeWish(pwish.id);
+    console.log(error)
+    if (success) {
+      setPWish(null);
+    }
+  }
+
+  const toggleBought = async ({
+    id, progress, price, name
+  }) => {
+    if (progress >= 100) {
+      setBWish({
+        id, progress, price, name
+      })
+    }
+  }
+
+  const onConfirmPurchase = async () => {
+    const {
+      success
+    } = await markAsBought(bwish.id, true, bwish.price, bwish.name);
+    if (success) {
+      setBWish(null);
+    }
+  }
+
   return (
     <SafeAreaView
       style={ {
@@ -104,7 +154,11 @@ export default function Wishlist() {
       >
       <AppTitle />
 
-      {wishes && wishes.length > 0 ? (
+      <DeleteConfirmationModal onConfirm={onConfirmDeletion} onCancel={() => setPWish(null)} title={"Delete Wish"} description={`Are you sure to delete ${pwish?.name}?`} visible={pwish !== null} />
+
+      <ConfirmationModal onConfirm={onConfirmPurchase} onCancel={() => setBWish(null)} title={"Buy Wish"} description={`Are you sure to buy ${bwish?.name}? It will cost you ${bwish?.price} ${currency}`} visible={bwish !== null} />
+
+      {!loading && wishes && wishes.length > 0 ? (
         <View
           style={ {
             marginHorizontal: 20,
@@ -129,9 +183,8 @@ export default function Wishlist() {
               item
             }) => (
               <WishlistCard
-                onPress={id =>
-                Alert.alert("Debug", "Preesed:" + id)
-                }
+                onLongPress={() => handleWishAction(item)}
+                onPress={() => toggleBought(item)}
                 id={item.id}
                 name={item.name}
                 description={item.description}
@@ -162,17 +215,17 @@ export default function Wishlist() {
             height: 250,
             width: 250
           }} source={wishSvg} />
-          
-          <Text style={{
+
+          <Text style={ {
             marginTop: 5
-          }}>You don't have wishes yet.</Text>
-          <Text style={{
+          }}>You don't have any wishes yet.</Text>
+          <Text style={ {
             color: colors.textSecondary,
             fontFamily: 'PoppinsItalic'
-          }}>Click <Text style={{
-            color: colors.primary.default,
-            fontFamily: 'PoppinsBold'
-          }}>+</Text> to create a new wish.</Text>
+          }}>Tap plus <Text style={ {
+              color: colors.primary.default,
+              fontFamily: 'PoppinsBold'
+            }}>(+)</Text> to create a new wish.</Text>
         </View>
       )}
 

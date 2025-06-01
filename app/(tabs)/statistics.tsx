@@ -52,14 +52,17 @@ export default function Statistics() {
   } = useCoinStore();
   const [transactions,
     setTransactions] = useState(null);
+  const [loading,
+    setLoading] = useState(false);
 
   const db = useSQLiteContext();
 
   useEffect(() => {
     const loadTransactions = async () => {
+      setLoading(true);
       const transacs = await db.getAllAsync('SELECT * FROM transactions;');
       setTransactions(transacs);
-      console.log("Transactions loaded:", transactions.length)
+      setLoading(false);
     }
     loadTransactions();
   }, [coins])
@@ -72,7 +75,9 @@ export default function Statistics() {
       20,
       50];
 
-    const reduced = transactions.reduce((acc, current) => {
+    const reduced = transactions
+    .filter((transaction) => transaction.transaction_type !== "use")
+    .reduce((acc, current) => {
       const amountKey = highlightedAmounts.includes(current.amount) ? current.amount: 'Others';
       const existing = acc.find(item => item.amount === amountKey);
 
@@ -195,32 +200,7 @@ export default function Statistics() {
       >
       <AppTitle />
 
-      {transactions && transactions.length > 0 ? (
-        <ScrollView
-          contentContainerStyle={ { flexGrow: 1,
-            paddingBottom: 95 }}
-          >
-          <View
-            style={ {
-              marginTop: 20,
-              marginHorizontal: 20
-            }}
-            >
-            <Text
-              style={ {
-                fontFamily: "PoppinsBold",
-                fontSize: 23,
-                marginLeft: 5
-              }}
-              >
-              Statistics
-            </Text>
-            <MostSavedCoinChart chartData={mostSavedCoin} />
-            <DailyCoinChart chartData={dayChartData} />
-            <MonthlyCoinChart chartData={monthChartData} />
-          </View>
-        </ScrollView>
-      ): (
+      {loading ? (
         <View style={ {
           flex: 1,
           alignItems: 'center',
@@ -233,9 +213,54 @@ export default function Statistics() {
 
           <Text style={ {
             marginTop: 5
-          }}>You don't have transactions data yet.</Text>
-        </View>
-      )}
-    </SafeAreaView>
-  );
-}
+          }}>Loading transactions...</Text>
+        </View> ) : (
+          <>
+            {!loading && transactions && transactions.length === 0 && (
+              <View style={ {
+                flex: 1,
+                alignItems: 'center',
+                marginTop: 120
+              }}>
+                <Image style={ {
+                  height: 250,
+                  width: 250
+                }} source={noDataSvg} />
+
+                <Text style={ {
+                  marginTop: 5
+                }}>You don't have any transactions yet.</Text>
+              </View>
+            )}
+
+            {!loading && transactions && transactions.length > 0 && (
+              <ScrollView
+                contentContainerStyle={ { flexGrow: 1,
+                  paddingBottom: 95 }}
+                >
+                <View
+                  style={ {
+                    marginTop: 20,
+                    marginHorizontal: 20
+                  }}
+                  >
+                  <Text
+                    style={ {
+                      fontFamily: "PoppinsBold",
+                      fontSize: 23,
+                      marginLeft: 5
+                    }}
+                    >
+                    Statistics
+                  </Text>
+                  <MostSavedCoinChart chartData={mostSavedCoin} />
+                  <DailyCoinChart chartData={dayChartData} />
+                  <MonthlyCoinChart chartData={monthChartData} />
+                </View>
+              </ScrollView>
+            )}
+          </>
+        )}
+      </SafeAreaView>
+    );
+  }

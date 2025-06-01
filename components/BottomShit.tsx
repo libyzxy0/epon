@@ -1,36 +1,43 @@
-import React, { forwardRef } from "react";
+import React, {
+  forwardRef
+} from "react";
 import BottomSheet, {
-    BottomSheetView,
-    BottomSheetTextInput
+  BottomSheetView,
+  BottomSheetTextInput
 } from "@gorhom/bottom-sheet";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import {
+  useColorScheme
+} from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 
 type Props = {
- children: React.ReactNode;
- containerStyle?: string;
+  children: React.ReactNode;
+  containerStyle?: string;
 }
 type Ref = BottomSheet;
 
-export const BottomShit = forwardRef<Ref, Props>((props, ref) => {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+export const BottomShit = forwardRef < Ref, Props > ((props, ref) => {
+  const theme = useColorScheme() ?? "light";
+  const colors = Colors[theme];
 
-    return (
-        <BottomSheet
-            ref={ref}
-            keyboardBehavior="extend"
-            index={-1}
-            snapPoints={props.snapPoints}
-            enablePanDownToClose
-            backgroundStyle={{
-                backgroundColor: colors.card
-            }}
-            handleIndicatorStyle={{
-             backgroundColor: colors.primary['default']
-            }}
-        >
-            <BottomSheetView style={props?.containerStyle}>{props.children}</BottomSheetView>
-        </BottomSheet>
-    );
+  return (
+    <BottomSheet
+      ref={ref}
+      keyboardBehavior="extend"
+      index={-1}
+      snapPoints={props.snapPoints}
+      enablePanDownToClose
+      keyboardBlurBehavior="restore"
+      android_keyboardInputMode="adjustResize"
+      backgroundStyle={ {
+        backgroundColor: colors.card
+      }}
+      handleIndicatorStyle={ {
+        backgroundColor: colors.primary['default']
+      }}
+      {...props}
+      >
+      <BottomSheetView style={props?.containerStyle}>{props.children}</BottomSheetView>
+    </BottomSheet>
+  );
 });

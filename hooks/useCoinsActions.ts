@@ -93,7 +93,7 @@ export function useCoinActions() {
     try {
       let result = await stmt.executeAsync({
         $name: "Use coin",
-        $description: note ? note : `Use ${currency}${amount} coin.`,
+        $description: note ? note : `Use ${amount} ${currency} coin.`,
         $transaction_type: "use",
         $amount: amount,
         $created_at: now()

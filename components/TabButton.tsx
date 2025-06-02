@@ -23,8 +23,9 @@ export default function TabButton({
             {icons[routeName]?.({ color })}
             <Text style={{
               color: color,
-              paddingVertical: 3,
-              fontSize: 12
+              paddingVertical: 2,
+              fontSize: 12,
+              fontFamily: isFocused ? "PoppinsBold" : "Poppins"
             }}>{label}</Text>
             
                 <View

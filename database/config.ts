@@ -1,1 +1,1 @@
-export const DATABASE_NAME: string = 'eponnilibyzxy0'
+export const DATABASE_NAME: string = 'iloveurenelyn.db';

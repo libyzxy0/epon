@@ -15,10 +15,27 @@ import Colors from "@/constants/Colors";
 import {
   useColorScheme
 } from "@/hooks/useColorScheme";
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {
+  SafeAreaProvider
+} from 'react-native-safe-area-context';
+import Storage from "expo-sqlite/kv-store";
+import {
+  useRouter
+} from "expo-router";
+import Onboarding from '@/app/onboarding'
 
 export default function _layout() {
   const colors = Colors[useColorScheme() ?? "light"];
+  const router = useRouter();
+
+  const onboarding = Storage.getItemSync("onboardingCompleted");
+  
+  if (onboarding === null) {
+    Storage.setItemSync("onboardingCompleted", "completed");
+    return <Onboarding />
+  }
+
+
   return (
     <SafeAreaProvider>
       <StatusBar translucent={false} backgroundColor={colors.background} />

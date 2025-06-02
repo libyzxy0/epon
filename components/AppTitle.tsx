@@ -3,7 +3,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import logo from "@/assets/images/logo.png";
 
@@ -25,7 +25,7 @@ export default function AppTitle() {
                 alignItems: "center"
             }}
         >
-            <View>
+            <TouchableOpacity activeOpacity={0.7}>
                 <Image
                    
                     style={{
@@ -35,11 +35,11 @@ export default function AppTitle() {
                     source={logo}
                     contentFit="contain"
                 />
-            </View>
+            </TouchableOpacity>
             <View>
-                <Pressable onPress={() => router.push("/settings")}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => router.push("/settings")}>
                     <Feather name="settings" size={20} color={colors.text} />
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     );

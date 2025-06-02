@@ -10,9 +10,8 @@ export default function TabBar({ state, descriptors, navigation }) {
   const colors = Colors[theme];
 
   return (
-    <View default>
+    <View>
       <View
-      default
         style={styles.tabbar}
       >
         {state.routes.map((route, index) => {
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    overflow: "hidden"
+    overflow: "hidden",
   }
 });
 

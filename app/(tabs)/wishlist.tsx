@@ -154,9 +154,9 @@ export default function Wishlist() {
       >
       <AppTitle />
 
-      <DeleteConfirmationModal onConfirm={onConfirmDeletion} onCancel={() => setPWish(null)} title={"Delete Wish"} description={`Are you sure to delete ${pwish?.name}?`} visible={pwish !== null} />
+      <DeleteConfirmationModal onConfirm={onConfirmDeletion} onCancel={() => setPWish(null)} title={"Delete Wish"} description={`Are you sure to delete “${pwish?.name}” in your wishlist?`} visible={pwish !== null} />
 
-      <ConfirmationModal onConfirm={onConfirmPurchase} onCancel={() => setBWish(null)} title={"Buy Wish"} description={`Are you sure to buy ${bwish?.name}? It will cost you ${bwish?.price} ${currency}`} visible={bwish !== null} />
+      <ConfirmationModal onConfirm={onConfirmPurchase} onCancel={() => setBWish(null)} title={"Buy Wish"} description={`Are you sure to buy “${bwish?.name}”? It will cost you ${bwish?.price} ${currency}`} visible={bwish !== null} />
 
       {!loading && wishes && wishes.length > 0 ? (
         <View

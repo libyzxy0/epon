@@ -84,7 +84,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                             borderWidth: 1,
                             borderColor: colors.border
                         }}
-                        placeholder="Si Crush"
+                        placeholder="Laptop"
                         placeholderTextColor={colors.textSecondary}
                     />
                 </View>
@@ -117,7 +117,7 @@ export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
                             borderWidth: 1,
                             borderColor: colors.border
                         }}
-                        placeholder="Si Jan Liby ay napakapogi."
+                        placeholder="I will use this Laptop for my school and work."
                         placeholderTextColor={colors.textSecondary}
                     />
                 </View>

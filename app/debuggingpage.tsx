@@ -22,6 +22,11 @@ import {
 import {
   useCoinStore
 } from '@/store/useCoinStore'
+import * as Application from 'expo-application';
+import {
+  now
+} from '@/utils/getDeviceTime'
+import { Platform } from 'react-native'
 
 export default function About() {
   const theme = useColorScheme() ?? "light";
@@ -35,6 +40,14 @@ export default function About() {
     setCoin] = useState({});
   const [wishlist,
     setWishlist] = useState([]);
+    const [currentTime, setCurrentTime] = useState(now());
+    
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(now());
+    }, 1000);
+    return () => clearInterval(intervalId)
+  }, [])
     
   useEffect(() => {
     async function setup() {
@@ -71,9 +84,22 @@ export default function About() {
             marginTop: 20
           }}
           >
-          Database Data
+          Debug Data
         </Text>
+        <Text style={{
+          color: colors.textSecondary
+        }}>All of this data isn't shared with any third party applications or services, this is for debug purposes only.</Text>
 
+        <Text
+          style={ {
+            paddingVertical: 20,
+            color: colors.red['default'],
+            fontFamily: 'PoppinsItalic',
+          }}
+          >
+           {"Time: " + currentTime}
+        </Text>
+        
         <Text
           style={ {
             paddingVertical: 20,
@@ -82,6 +108,30 @@ export default function About() {
           }}
           >
            {"SQLite Version: " + version}
+        </Text>
+        <Text
+          style={ {
+            paddingVertical: 20,
+            color: colors.text
+          }}
+          >
+          <Text style={{
+            fontFamily: 'PoppinsBold',
+            color: colors.text
+          }}>App Info {" "}</Text>
+          {(JSON.stringify(Application, null, 2) + "\n")}
+        </Text>
+        <Text
+          style={ {
+            paddingVertical: 20,
+            color: colors.text
+          }}
+          >
+          <Text style={{
+            fontFamily: 'PoppinsBold',
+            color: colors.text
+          }}>Device Info {" "}</Text>
+          {(JSON.stringify(Platform, null, 2) + "\n")}
         </Text>
         <Text
           style={ {

@@ -56,7 +56,7 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
           marginTop: 10
         }}
         >
-        Use Money 💵
+        Use Coin 🪙
       </Text>
       <View
         transparent

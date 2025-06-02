@@ -86,7 +86,7 @@ export default function Settings() {
       }}
       >
 
-      <DeleteConfirmationModal onConfirm={onConfirmDeletion} onCancel={() => setDeletionModalOpen(false)} title={"Erase All Data"} description={`Are you sure to delete your all of your data? This will wipe everything including wishlists, coins and transactions, and cannot be recovered.`} visible={deletionModalOpen} />
+      <DeleteConfirmationModal onConfirm={onConfirmDeletion} onCancel={() => setDeletionModalOpen(false)} title={"Erase All Data"} description={`Are you sure to delete your all of your data? This will wipe everything including wishlists, coins and transactions, at hindi mo na maibabalik ang dating kayo.`} visible={deletionModalOpen} />
       <View
         style={ {
           margin: 15,

@@ -63,7 +63,7 @@ export function CoinStatus({ onUsePress }: { onUsePress: () => {};}) {
                             color: colors.card
                         }}
                     >
-                        Use Money
+                        Use Coin
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -57,6 +57,6 @@ export default {
         text: "#fff",
         textSecondary: "#525252",
         textTertiary: "#404040",
-        background: "#000"
+        background: "#000000"
     }
 };

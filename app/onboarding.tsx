@@ -43,6 +43,11 @@ export default function Onboarding() {
     }
   }
   
+  const handleSkip = () => {
+    router.push('/');
+    Storage.setItemSync("onboardingCompleted", "completed")
+  }
+  
   return (
     <SafeAreaView
       style={{
@@ -91,7 +96,7 @@ export default function Onboarding() {
       }}>
         {currentPage !== 2 && (
           <TouchableOpacity 
-            onPress={() => router.push('/')} 
+            onPress={handleSkip} 
             style={{
               marginHorizontal: 40
             }} 

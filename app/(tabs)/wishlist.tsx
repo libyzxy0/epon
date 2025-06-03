@@ -50,15 +50,16 @@ import {
 import {
   ConfirmationModal
 } from '@/components/ConfirmationModal'
+import Toast from 'react-native-toast-message'
 
 type WishlistType = {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    is_bought: boolean;
-    created_at: string;
-    progress?: number;
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  is_bought: boolean;
+  created_at: string;
+  progress?: number;
 };
 
 const handleColor = (progress: number): string => {
@@ -75,7 +76,10 @@ const handleColor = (progress: number): string => {
 
 export default function Wishlist() {
   const colors = Colors[(useColorScheme() ?? "light")];
-  const {coins, currency} = useCoinStore();
+  const {
+    coins,
+    currency
+  } = useCoinStore();
 
   const {
     fetchWishlist,
@@ -91,7 +95,7 @@ export default function Wishlist() {
   }, []);
 
   const [wishes,
-    setWishes] = useState<WishlistType>([]);
+    setWishes] = useState < WishlistType > ([]);
 
   useEffect(() => {
     const w = wishlist.map((item: WishlistType) => {
@@ -108,12 +112,12 @@ export default function Wishlist() {
     setWishes(w);
   }, [coins, wishlist]);
 
-  const bottomSheetRef = useRef <BottomSheet | null> (null);
+  const bottomSheetRef = useRef < BottomSheet | null > (null);
 
   const [pwish,
-    setPWish] = useState<WishlistType | null>(null);
+    setPWish] = useState < WishlistType | null > (null);
   const [bwish,
-    setBWish] = useState<WishlistType | null>(null);
+    setBWish] = useState < WishlistType | null > (null);
 
   const handleWishAction = (data: WishlistType) => {
     setPWish(data);
@@ -126,6 +130,11 @@ export default function Wishlist() {
     } = await removeWish(pwish.id);
     if (success) {
       setPWish(null);
+      Toast.show({
+        type: 'success',
+        text1: 'Deleted!',
+        text2: "Wish deleted successfully!"
+      })
     }
   }
 
@@ -145,6 +154,11 @@ export default function Wishlist() {
     } = await markAsBought(bwish.id, true, bwish.price, bwish.name);
     if (success) {
       setBWish(null);
+      Toast.show({
+        type: 'success',
+        text1: 'Congratulations 🎉',
+        text2: `You just bought your wish “${bwish.name}” 🎉`
+      })
     }
   }
 

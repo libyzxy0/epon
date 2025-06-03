@@ -22,13 +22,17 @@ import {
 import {
   useCoinActions
 } from "@/hooks/useCoinsActions";
+import {
+  useCoinStore
+} from '@/store/useCoinStore'
+import Toast from 'react-native-toast-message'
 
 export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
   const [amount, setAmount] = useState(null);
   const [note, setNote] = useState(null);
-
+  const { currency } = useCoinStore();
   const {
     useCoin
   } = useCoinActions();
@@ -39,6 +43,11 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
     } = await useCoin(amount, note);
 
     if (success) {
+      Toast.show({
+        type: 'warning',
+        text1: 'Nice! but Not! 😐',
+        text2: `You just used/wasted ${amount} ${currency} of your coins!`
+      })
       ref.current?.close();
       setNote(null);
       setAmount(null);

@@ -42,7 +42,13 @@ import {
   SQLiteProvider,
   useSQLiteContext
 } from "expo-sqlite";
-import { DATABASE_NAME } from "@/database/config";
+import {
+  DATABASE_NAME
+} from "@/database/config";
+import Toast, {
+  BaseToast,
+  ErrorToast
+} from 'react-native-toast-message'
 
 export {
   ErrorBoundary
@@ -112,11 +118,65 @@ export default function RootLayout() {
   function RootLayoutNav() {
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? "light"];
-    const { fetchCoins } = useCoinActions();
+    const {
+      fetchCoins
+    } = useCoinActions();
 
     useEffect(() => {
       fetchCoins();
     }, []);
+
+
+    const toastConfig = {
+      success: (props) => (
+        <BaseToast
+          {...props}
+          style={ { borderLeftColor: colors.primary.default, backgroundColor: colors.card }}
+          contentContainerStyle={ { paddingHorizontal: 15 }}
+          text1Style={ {
+            fontSize: 15,
+            fontFamily: 'PoppinsBold',
+            color: colors.primary.default
+          }}
+          text2Style={ {
+            fontSize: 13,
+            color: colors.text
+          }}
+          />
+      ),
+      error: (props) => (
+        <BaseToast
+          {...props}
+          style={ { borderLeftColor: colors.red.default, backgroundColor: colors.card }}
+          contentContainerStyle={ { paddingHorizontal: 15 }}
+          text1Style={ {
+            fontSize: 15,
+            fontFamily: 'PoppinsBold',
+            color: colors.red.default
+          }}
+          text2Style={ {
+            fontSize: 13,
+            color: colors.text
+          }}
+          />
+      ),
+      warning: (props) => (
+        <BaseToast
+          {...props}
+          style={ { borderLeftColor: colors.yellow.default, backgroundColor: colors.card }}
+          contentContainerStyle={ { paddingHorizontal: 15 }}
+          text1Style={ {
+            fontSize: 15,
+            fontFamily: 'PoppinsBold',
+            color: colors.yellow.default
+          }}
+          text2Style={ {
+            fontSize: 13,
+            color: colors.text
+          }}
+          />
+      ),
+    };
 
     return (
       <ThemeProvider
@@ -168,6 +228,12 @@ export default function RootLayout() {
               }}
               />
           </Stack>
+          <Toast
+            position='top'
+            topOffset={45}
+            swipeable
+            config={toastConfig}
+            />
         </GestureHandlerRootView>
       </ThemeProvider>
     );

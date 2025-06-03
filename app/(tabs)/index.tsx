@@ -26,8 +26,15 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import {
   useRef
 } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { UseMoneySheet } from '@/components/UseMoneySheet'
+import {
+  TouchableOpacity
+} from 'react-native'
+import {
+  UseMoneySheet
+} from '@/components/UseMoneySheet'
+import {
+  ScrollView
+} from 'react-native'
 
 export default function Index() {
   const colors = Colors[(useColorScheme() ?? "light")];
@@ -41,7 +48,8 @@ export default function Index() {
       }}
       >
       <AppTitle />
-      <View
+
+      <ScrollView
         style={ {
           marginTop: 20,
           marginHorizontal: 20
@@ -50,9 +58,9 @@ export default function Index() {
         <CoinStatus onUsePress={() => moneyBottomSheetRef.current?.expand()} />
         <SaveCoin />
         <CalendarTracker />
-      </View>
-      
-        <UseMoneySheet ref={moneyBottomSheetRef} />
+      </ScrollView>
+
+      <UseMoneySheet ref={moneyBottomSheetRef} />
     </SafeAreaView>
   );
 }

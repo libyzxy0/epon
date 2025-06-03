@@ -17,8 +17,7 @@ type Props = {
 type Ref = BottomSheet;
 
 export const BottomShit = forwardRef < Ref, Props > ((props, ref) => {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
 
   return (
     <BottomSheet

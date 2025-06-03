@@ -44,8 +44,7 @@ import {
 import noDataSvg from "@/assets/images/No_data-rafiki.svg";
 
 export default function Statistics() {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
   const {
     short_currency,
     coins

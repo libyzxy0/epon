@@ -11,7 +11,10 @@ import {
   WishlistCard
 } from "@/components/WishlistCard";
 import {
-  FlatList
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  Pressable
 } from "react-native";
 import {
   useState,
@@ -25,10 +28,6 @@ import {
   SafeAreaView
 } from "react-native-safe-area-context";
 import {
-  Alert,
-  Pressable
-} from "react-native";
-import {
   useCoinStore
 } from "@/store/useCoinStore";
 import {
@@ -41,19 +40,26 @@ import {
   MakeWishSheet
 } from "@/components/MakeWishSheet";
 import {
-  TouchableOpacity
-} from "react-native";
-import {
   Image
 } from "expo-image";
 import wishSvg from "@/assets/images/Empty-pana.svg";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet"
 import {
   DeleteConfirmationModal
-} from '@/components/DeleteConfirmationModal';
+} from '@/components/DeleteConfirmationModal'
 import {
   ConfirmationModal
-} from '@/components/ConfirmationModal';
+} from '@/components/ConfirmationModal'
+
+type WishlistType = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    is_bought: boolean;
+    created_at: string;
+    progress?: number;
+};
 
 const handleColor = (progress: number): string => {
   if (progress < 25) {
@@ -68,10 +74,8 @@ const handleColor = (progress: number): string => {
 };
 
 export default function Wishlist() {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
-  const coins = useCoinStore(state => state.coins);
-  const currency = useCoinStore(state => state.currency);
+  const colors = Colors[(useColorScheme() ?? "light")];
+  const {coins, currency} = useCoinStore();
 
   const {
     fetchWishlist,
@@ -87,10 +91,10 @@ export default function Wishlist() {
   }, []);
 
   const [wishes,
-    setWishes] = useState([]);
+    setWishes] = useState<WishlistType>([]);
 
   useEffect(() => {
-    const w = wishlist.map(item => {
+    const w = wishlist.map((item: WishlistType) => {
       return {
         id: item.id,
         name: item.name,
@@ -104,14 +108,14 @@ export default function Wishlist() {
     setWishes(w);
   }, [coins, wishlist]);
 
-  const bottomSheetRef = useRef < BottomSheet > (null);
+  const bottomSheetRef = useRef <BottomSheet | null> (null);
 
   const [pwish,
-    setPWish] = useState(null);
+    setPWish] = useState<WishlistType | null>(null);
   const [bwish,
-    setBWish] = useState(null);
+    setBWish] = useState<WishlistType | null>(null);
 
-  const handleWishAction = (data) => {
+  const handleWishAction = (data: WishlistType) => {
     setPWish(data);
   }
 
@@ -120,7 +124,6 @@ export default function Wishlist() {
       success,
       error
     } = await removeWish(pwish.id);
-    console.log(error)
     if (success) {
       setPWish(null);
     }

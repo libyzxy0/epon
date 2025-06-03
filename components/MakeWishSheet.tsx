@@ -8,8 +8,7 @@ import { TouchableOpacity } from "react-native";
 import { useWishlistActions } from "@/hooks/useWishlistActions";
 
 export const MakeWishSheet = forwardRef<BottomSheet, any>((props, ref) => {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+    const colors = Colors[(useColorScheme() ?? "light")];
 
     const [name, setName] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);

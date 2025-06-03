@@ -15,8 +15,7 @@ import logo from "@/assets/images/logo.png";
 export function CustomLoading({
   text
 }: { text: string; }) {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
   return (
     <View
       style={ {

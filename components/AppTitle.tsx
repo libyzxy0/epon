@@ -8,8 +8,7 @@ import { Image } from "expo-image";
 import logo from "@/assets/images/logo.png";
 
 export default function AppTitle() {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+    const colors = Colors[(useColorScheme() ?? "light")];
     const router = useRouter();
     return (
         <View

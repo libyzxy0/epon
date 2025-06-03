@@ -4,13 +4,21 @@ import { useState } from "react";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 
+type SaveMoneyModalType = {
+  visible: boolean;
+  amount: number;
+  isCustom: boolean;
+  onConfirm: (inputAmount: number) => void;
+  onCancel: () => void;
+}
+
 export function SaveMoneyModal({
     visible = false,
     isCustom,
     amount,
     onConfirm,
     onCancel
-}) {
+}: SaveMoneyModalType) {
     const [inputAmmount, onChangeAmmount] = useState<number | null>(0);
     const handleConfirm = () => {
         onConfirm?.(Number(inputAmmount));
@@ -20,9 +28,7 @@ export function SaveMoneyModal({
     const handleCancel = () => {
         onCancel?.();
     };
-
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+    const colors = Colors[(useColorScheme() ?? "light")];
 
     return (
         <Modal

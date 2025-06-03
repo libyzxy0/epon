@@ -30,8 +30,7 @@ import { TouchableOpacity } from 'react-native'
 import { UseMoneySheet } from '@/components/UseMoneySheet'
 
 export default function Index() {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
   const moneyBottomSheetRef = useRef < BottomSheet > (null);
 
   return (

@@ -14,8 +14,7 @@ import {
 } from "@expo/vector-icons"
 
 export function FloatingButtonPlus({ onPress }: { onPress: () => {}}) {
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
   return (
       <TouchableOpacity activeOpacity={0.7} onPress={onPress} style={ {
         height: 50,

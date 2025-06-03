@@ -14,13 +14,21 @@ import {
 } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 
+type DeleteConfirmationModalType = {
+  title: string;
+  description: string;
+  visible: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
 export function DeleteConfirmationModal({
   visible = false,
   title,
   description,
   onConfirm,
   onCancel
-}) {
+}: DeleteConfirmationModalType) {
   const handleConfirm = () => {
     onConfirm?.();
   };
@@ -29,8 +37,7 @@ export function DeleteConfirmationModal({
     onCancel?.();
   };
 
-  const theme = useColorScheme() ?? "light";
-  const colors = Colors[theme];
+  const colors = Colors[(useColorScheme() ?? "light")];
 
   return (
     <Modal

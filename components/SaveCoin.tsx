@@ -14,8 +14,7 @@ type CoinButtonType = {
 };
 
 export function SaveCoin() {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+    const colors = Colors[(useColorScheme() ?? "light")];
     const { saveCoin } = useCoinActions();
     const [coinModal, setCoinModal] = useState({
         visisble: false,
@@ -195,8 +194,7 @@ function CoinButton({
     onPress,
     color
 }: CoinButtonType) {
-    const theme = useColorScheme() ?? "light";
-    const colors = Colors[theme];
+    const colors = Colors[(useColorScheme() ?? "light")];
     return (
         <TouchableOpacity activeOpacity={0.7}
             onPress={onPress}

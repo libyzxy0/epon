@@ -23,6 +23,7 @@ export function DailyCoinChart({
 }) {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
+
   return (
     <View
       style={ {
@@ -56,9 +57,7 @@ export function DailyCoinChart({
         <BarChart
           data={ {
             labels: chartData.labels,
-            datasets: [{
-              data: chartData.data
-            }]
+            datasets: chartData.data
           }}
           width={
           (chartData.labels.length *

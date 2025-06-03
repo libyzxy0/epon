@@ -110,7 +110,6 @@ export default function Statistics() {
     });
   }, [transactions]);
 
-
   const dayChartData = useMemo(() => {
     const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     if (!transactions || transactions.length === 0) {
@@ -132,6 +131,7 @@ export default function Statistics() {
       endOfWeek.setHours(23, 59, 59, 999);
       return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
     });
+
     const totals = Array(7).fill(0);
     currentWeekTransactions
     .filter((transaction) => transaction.transaction_type !== "use")
@@ -142,18 +142,25 @@ export default function Statistics() {
         totals[daysDiff] += t.amount;
       }
     });
+
+
     return {
       labels: weekLabels,
-      data: totals
+      data: [{
+        data: totals,
+        color: () => colors.primary.default
+      }]
     };
   }, [transactions]);
+
 
   const monthChartData = useMemo(() => {
     const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (!transactions || transactions.length === 0) {
       return {
         labels: monthLabels,
-        data: Array(12).fill(0)
+        data: [Array(12).fill(0),
+          Array(12).fill(0)]
       };
     }
     const totals = Array(12).fill(0);
@@ -163,9 +170,26 @@ export default function Statistics() {
       const monthIndex = new Date(t.created_at).getMonth();
       totals[monthIndex] += t.amount;
     });
+
+    const totalsUse = Array(12).fill(0);
+    transactions
+    .filter((transaction) => transaction.transaction_type == "use")
+    .forEach((t) => {
+      const monthIndex = new Date(t.created_at).getMonth();
+      totalsUse[monthIndex] += t.amount;
+    });
+
     return {
       labels: monthLabels,
-      data: totals
+      data: [{
+        data: totalsUse,
+        color: () => colors.red.default
+      },
+        {
+          data: totals,
+          color: () => colors.primary.default
+        },
+      ]
     };
   },
     [transactions]);

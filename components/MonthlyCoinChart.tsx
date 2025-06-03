@@ -33,23 +33,96 @@ export function MonthlyCoinChart({
         backgroundColor: colors.card
       }}
       >
-      <Text
+     
+     
+     <View
+        transparent
         style={ {
-          fontFamily: "PoppinsBold",
-          fontSize: 16,
-          color: colors.primary['default']
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginRight: 5
         }}
         >
-        Montly Coins
-      </Text>
+        <Text
+          style={ {
+            fontFamily: "PoppinsBold",
+            fontSize: 16,
+            color: colors.primary.default,
+            paddingTop: 3
+          }}
+          >
+         Monthly Coins
+
+        </Text>
+
+        <View
+          transparent
+          style={ {
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12
+          }}
+          >
+          <View
+            transparent
+            style={ {
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 4
+            }}
+            >
+            <View
+              style={ {
+                backgroundColor: colors.primary['default'],
+                height: 15,
+                width: 15,
+                borderRadius: 20
+              }}
+              />
+            <Text
+              style={ {
+                color: colors.primary['default'],
+                paddingTop: 2.5
+              }}
+              >
+              Save
+            </Text>
+          </View>
+
+          <View
+            transparent
+            style={ {
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 4,
+            }}
+            >
+            <View
+              style={ {
+                backgroundColor: colors.red.default,
+                height: 15,
+                width: 15,
+                borderRadius: 20
+              }}
+              />
+            <Text
+              style={ {
+                color: colors.red.default,
+                paddingTop: 2.5
+              }}
+              >
+              Use
+            </Text>
+          </View>
+        </View>
+      </View>
 
       <ScrollView horizontal>
         <LineChart
           data={ {
             labels: chartData.labels,
-            datasets: [{
-              data: chartData.data
-            }]
+            datasets: chartData.data
           }}
           width={
           (chartData.labels.length *
@@ -78,7 +151,7 @@ export function MonthlyCoinChart({
             propsForDots: {
               r: "6",
               strokeWidth: "2",
-              stroke: colors.primary['default']
+              stroke: colors.text
             }
           }}
           bezier

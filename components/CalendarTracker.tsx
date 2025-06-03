@@ -205,6 +205,7 @@ export function CalendarTracker() {
           </View>
         </View>
       </View>
+      
       <View key={theme}>
         <Calendar
           onMonthChange={setDate}

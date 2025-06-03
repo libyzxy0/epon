@@ -32,7 +32,9 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
   const colors = Colors[theme];
   const [amount, setAmount] = useState(null);
   const [note, setNote] = useState(null);
-  const { currency } = useCoinStore();
+  const {
+    currency
+  } = useCoinStore();
   const {
     useCoin
   } = useCoinActions();
@@ -46,14 +48,19 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
       Toast.show({
         type: 'warning',
         text1: 'Nice! but Not! 😐',
-        text2: `You just used/wasted ${amount} ${currency} of your coins!`
+        text2: `You've just wasted ${amount} ${currency} of your coins!`
       })
       ref.current?.close();
       setNote(null);
       setAmount(null);
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to use coin!',
+        text2: `Error Message: ${error}`
+      })
     }
   }
-
   return (
     <BottomShit containerStyle={ {
       paddingHorizontal: 20

@@ -166,7 +166,6 @@ function FirstPage() {
       </Text>
       <Text style={{
         color: colors.text + 'AA',
-        fontFamily: 'PoppinsRegular',
         fontSize: 16,
         textAlign: 'center',
         lineHeight: 24,
@@ -206,7 +205,6 @@ function SecondPage() {
       </Text>
       <Text style={{
         color: colors.text + 'AA',
-        fontFamily: 'PoppinsRegular',
         fontSize: 16,
         textAlign: 'center',
         lineHeight: 24,
@@ -246,7 +244,6 @@ function ThirdPage() {
       </Text>
       <Text style={{
         color: colors.text + 'AA',
-        fontFamily: 'PoppinsRegular',
         fontSize: 16,
         textAlign: 'center',
         lineHeight: 24,

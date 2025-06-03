@@ -113,39 +113,35 @@ export default function Statistics() {
 
   const dayChartData = useMemo(() => {
     const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
     if (!transactions || transactions.length === 0) {
       return {
         labels: weekLabels,
         data: Array(7).fill(0)
       };
     }
-
     const today = new Date();
     const currentDay = today.getDay();
     const mondayOffset = currentDay === 0 ? -6: 1 - currentDay;
     const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() + mondayOffset);
     startOfWeek.setHours(0, 0, 0, 0);
-
     const currentWeekTransactions = transactions.filter(t => {
       const transactionDate = new Date(t.created_at);
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
       endOfWeek.setHours(23, 59, 59, 999);
-
       return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
     });
-
     const totals = Array(7).fill(0);
-    currentWeekTransactions.forEach((t) => {
+    currentWeekTransactions
+    .filter((transaction) => transaction.transaction_type !== "use")
+    .forEach((t) => {
       const transactionDate = new Date(t.created_at);
       const daysDiff = Math.floor((transactionDate - startOfWeek) / (1000 * 60 * 60 * 24));
       if (daysDiff >= 0 && daysDiff < 7) {
         totals[daysDiff] += t.amount;
       }
     });
-
     return {
       labels: weekLabels,
       data: totals
@@ -154,36 +150,22 @@ export default function Statistics() {
 
   const monthChartData = useMemo(() => {
     const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
     if (!transactions || transactions.length === 0) {
       return {
         labels: monthLabels,
         data: Array(12).fill(0)
       };
     }
-
     const totals = Array(12).fill(0);
-
-    transactions.forEach((t) => {
+    transactions
+    .filter((transaction) => transaction.transaction_type !== "use")
+    .forEach((t) => {
       const monthIndex = new Date(t.created_at).getMonth();
       totals[monthIndex] += t.amount;
     });
-
-    const currentMonthIndex = new Date().getMonth();
-
-    const rotatedLabels = [
-      ...monthLabels.slice(currentMonthIndex),
-      ...monthLabels.slice(0, currentMonthIndex)
-    ];
-
-    const rotatedData = [
-      ...totals.slice(currentMonthIndex),
-      ...totals.slice(0, currentMonthIndex)
-    ];
-
     return {
-      labels: rotatedLabels,
-      data: rotatedData
+      labels: monthLabels,
+      data: totals
     };
   },
     [transactions]);
@@ -213,53 +195,53 @@ export default function Statistics() {
           <Text style={ {
             marginTop: 5
           }}>Loading transactions...</Text>
-        </View> ) : (
-          <>
-            {!loading && transactions && transactions.length === 0 && (
-              <View style={ {
-                flex: 1,
-                alignItems: 'center',
-                marginTop: 120
-              }}>
-                <Image style={ {
-                  height: 250,
-                  width: 250
-                }} source={noDataSvg} />
+        </View>): (
+        <>
+          {!loading && transactions && transactions.length === 0 && (
+            <View style={ {
+              flex: 1,
+              alignItems: 'center',
+              marginTop: 120
+            }}>
+              <Image style={ {
+                height: 250,
+                width: 250
+              }} source={noDataSvg} />
 
-                <Text style={ {
-                  marginTop: 5
-                }}>You don't have any transactions yet.</Text>
-              </View>
-            )}
+              <Text style={ {
+                marginTop: 5
+              }}>You don't have any transactions yet.</Text>
+            </View>
+          )}
 
-            {!loading && transactions && transactions.length > 0 && (
-              <ScrollView
-                contentContainerStyle={ { flexGrow: 1,
-                  paddingBottom: 95 }}
+          {!loading && transactions && transactions.length > 0 && (
+            <ScrollView
+              contentContainerStyle={ { flexGrow: 1,
+                paddingBottom: 95 }}
+              >
+              <View
+                style={ {
+                  marginTop: 20,
+                  marginHorizontal: 20
+                }}
                 >
-                <View
+                <Text
                   style={ {
-                    marginTop: 20,
-                    marginHorizontal: 20
+                    fontFamily: "PoppinsBold",
+                    fontSize: 23,
+                    marginLeft: 5
                   }}
                   >
-                  <Text
-                    style={ {
-                      fontFamily: "PoppinsBold",
-                      fontSize: 23,
-                      marginLeft: 5
-                    }}
-                    >
-                    Statistics
-                  </Text>
-                  <MostSavedCoinChart chartData={mostSavedCoin} />
-                  <DailyCoinChart chartData={dayChartData} />
-                  <MonthlyCoinChart chartData={monthChartData} />
-                </View>
-              </ScrollView>
-            )}
-          </>
-        )}
-      </SafeAreaView>
-    );
-  }
+                  Statistics
+                </Text>
+                <MostSavedCoinChart chartData={mostSavedCoin} />
+                <DailyCoinChart chartData={dayChartData} />
+                <MonthlyCoinChart chartData={monthChartData} />
+              </View>
+            </ScrollView>
+          )}
+        </>
+      )}
+    </SafeAreaView>
+  );
+}

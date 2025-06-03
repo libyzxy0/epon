@@ -27,6 +27,7 @@ import {
 import {
   useRouter
 } from 'expo-router'
+import Storage from "expo-sqlite/kv-store";
 
 export default function Onboarding() {
   const colors = Colors[(useColorScheme() ?? "light")];
@@ -38,6 +39,7 @@ export default function Onboarding() {
       setPage(currentPage + 1);
     } else {
       router.push('/');
+      Storage.setItemSync("onboardingCompleted", "completed");
     }
   }
   

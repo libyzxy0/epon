@@ -31,7 +31,6 @@ export default function _layout() {
   const onboarding = Storage.getItemSync("onboardingCompleted");
   
   if (onboarding === null) {
-    Storage.setItemSync("onboardingCompleted", "completed");
     return <Onboarding />
   }
 

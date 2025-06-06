@@ -123,6 +123,7 @@ export default function Settings() {
                 />
             </View>
           </TouchableOpacity>
+          
           <TouchableOpacity activeOpacity={0.6}
             transparent
             style={ {
@@ -134,10 +135,10 @@ export default function Settings() {
               justifyContent: "space-between"
             }}
             >
-            <Text>Currency</Text>
+            <Text>Rate Us</Text>
             <View transparent>
               <Feather
-                name="chevron-down"
+                name="star"
                 size={20}
                 color={colors.textTertiary}
                 />
@@ -171,11 +172,15 @@ export default function Settings() {
               paddingBottom: 10,
               flexDirection: "row",
               alignItems: "center",
+              height: 30,
               justifyContent: "space-between"
             }}
             >
             <Text>Dark Mode</Text>
-            <View transparent>
+            <View transparent style={{
+              justifyContent: 'end',
+              flex: 1
+            }}>
               <Switch
                 trackColor={ {
                   false: "#767577",

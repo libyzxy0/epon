@@ -10,7 +10,7 @@ import {
 } from "@/components/Themed";
 import {
   StatusBar
-} from 'react-native'
+} from 'expo-status-bar'
 import Colors from "@/constants/Colors";
 import {
   useColorScheme
@@ -25,7 +25,8 @@ import {
 import Onboarding from '@/app/onboarding'
 
 export default function _layout() {
-  const colors = Colors[useColorScheme() ?? "light"];
+  const theme = useColorScheme() ?? "light";
+  const colors = Colors[theme];
   const router = useRouter();
 
   const onboarding = Storage.getItemSync("onboardingCompleted");
@@ -37,7 +38,7 @@ export default function _layout() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar translucent={false} backgroundColor={colors.background} />
+      <StatusBar style={theme === "dark" ? "light" : "dark"} />
       <Tabs
         tabBar={props => <TabBar {...props} />}
         screenOptions={ {

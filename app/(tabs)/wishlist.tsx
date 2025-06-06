@@ -14,12 +14,14 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
-  Pressable
+  Pressable,
+  RefreshControl
 } from "react-native";
 import {
   useState,
   useEffect,
-  useRef
+  useRef,
+  useCallback
 } from "react";
 import {
   FloatingButtonPlus
@@ -51,7 +53,6 @@ import {
   ConfirmationModal
 } from '@/components/ConfirmationModal'
 import Toast from 'react-native-toast-message'
-
 type WishlistType = {
   id: string;
   name: string;
@@ -85,7 +86,8 @@ export default function Wishlist() {
     fetchWishlist,
     markAsBought,
     removeWish,
-    loading
+    loading,
+    setLoading
   } = useWishlistActions();
   const {
     wishlist
@@ -93,6 +95,16 @@ export default function Wishlist() {
   useEffect(() => {
     fetchWishlist();
   }, []);
+  const [refreshing,
+    setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setLoading(true);
+    fetchWishlist();
+    setRefreshing(false);
+    setLoading(false);
+  }, [fetchWishlist]);
 
   const [wishes,
     setWishes] = useState < WishlistType > ([]);
@@ -184,6 +196,14 @@ export default function Wishlist() {
           >
           <FlatList
             data={wishes}
+            refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[colors.primary.default]}
+              tintColor={colors.primary.default}
+              />
+            }
             ListHeaderComponent={
             <Text
               style={ {

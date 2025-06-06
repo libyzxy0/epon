@@ -227,6 +227,12 @@ export default function RootLayout() {
                 headerShown: false
               }}
               />
+            <Stack.Screen
+              name="transactions"
+              options={ {
+                headerShown: false
+              }}
+              />
           </Stack>
           <Toast
             position='top'

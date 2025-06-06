@@ -46,9 +46,7 @@ export function useCoinActions() {
       try {
         let result = await statement.executeAsync({
           $name: "Save coin",
-          $description: `Saves ${currency}${amount} amount of money at ${new Date(now()).toLocaleDateString('en-US', {
-            weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
-          })}`,
+          $description: `Saves ${amount}  ${currency} coins.`,
           $transaction_type: "save",
           $amount: amount,
           $created_at: now()
@@ -93,7 +91,7 @@ export function useCoinActions() {
     try {
       let result = await stmt.executeAsync({
         $name: "Use coin",
-        $description: note ? note : `Use ${amount} ${currency} coin.`,
+        $description: note ? note : `Used ${amount} ${currency} coins.`,
         $transaction_type: "use",
         $amount: amount,
         $created_at: now()

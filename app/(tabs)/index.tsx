@@ -13,6 +13,9 @@ import {
   CoinStatus
 } from "@/components/CoinStatus";
 import {
+  RecentTransactions
+} from "@/components/RecentTransactions";
+import {
   SafeAreaView
 } from "react-native-safe-area-context";
 import {
@@ -48,16 +51,21 @@ export default function Index() {
       }}
       >
       <AppTitle />
-
       <ScrollView
+      showsVerticalScrollIndicator={false} 
         style={ {
           marginTop: 20,
-          marginHorizontal: 20
+          marginHorizontal: 20,
         }}
         >
-        <CoinStatus onUsePress={() => moneyBottomSheetRef.current?.expand()} />
-        <SaveCoin />
-        <CalendarTracker />
+        <View transparent style={ {
+          marginBottom: 80,
+        }}>
+          <CoinStatus onUsePress={() => moneyBottomSheetRef.current?.expand()} />
+          <SaveCoin />
+          <CalendarTracker />
+          <RecentTransactions />
+        </View>
       </ScrollView>
 
       <UseMoneySheet ref={moneyBottomSheetRef} />

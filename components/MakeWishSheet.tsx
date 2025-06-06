@@ -36,11 +36,28 @@ export const MakeWishSheet = forwardRef < BottomSheet, any > ((props, ref) => {
   } = useWishlistActions();
 
   const handleCreateWish = async () => {
+    if(name === null || name === "") {
+      Toast.show({
+        type: 'warning',
+        text1: 'Missing name!',
+        text2: "Please enter the name of your wish!"
+      })
+      return;
+    }
+    if(price === null || price === "") {
+      Toast.show({
+        type: 'warning',
+        text1: 'Missing price!',
+        text2: "Please enter the price of your wish!"
+      })
+      return;
+    }
+    
     const {
       success, error
     } = await makeAWish( {
         name,
-        description,
+        description: description === null || description === "" ? "No description." : description,
         price: Number(price) /* Convert to number type, baka mag 1+1=11 */
       });
 

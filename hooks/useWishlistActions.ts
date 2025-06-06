@@ -117,6 +117,7 @@ export function useWishlistActions() {
     makeAWish,
     removeWish,
     markAsBought,
-    loading
+    loading,
+    setLoading
   };
 }

@@ -23,6 +23,9 @@ import {
   useCoinStore
 } from '@/store/useCoinStore'
 import Toast from 'react-native-toast-message'
+import {
+  now
+} from '@/utils/getDeviceTime'
 
 type CoinButtonType = {
   short_currency: string;
@@ -123,7 +126,7 @@ export function SaveCoin() {
                 marginTop: 4
               }}
               >
-              for 05/26/2026
+             {`for ${(new Date(now()).toLocaleString().split(","))[0]}`}
             </Text>
           </View>
         </View>

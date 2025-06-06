@@ -47,7 +47,8 @@ export default function Statistics() {
   const colors = Colors[(useColorScheme() ?? "light")];
   const {
     short_currency,
-    coins
+    coins,
+    started_at
   } = useCoinStore();
   const [transactions,
     setTransactions] = useState(null);
@@ -155,14 +156,16 @@ export default function Statistics() {
 
 
   const monthChartData = useMemo(() => {
+    const startMonth = new Date(started_at).getMonth();
     const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (!transactions || transactions.length === 0) {
       return {
-        labels: monthLabels,
+        labels: monthLabels.slice(startMonth).concat(monthLabels.slice(0, startMonth)),
         data: [Array(12).fill(0),
-          Array(12).fill(0)]
+          Array(12).fill(0)],
       };
     }
+
     const totals = Array(12).fill(0);
     transactions
     .filter((transaction) => transaction.transaction_type !== "use")
@@ -179,20 +182,25 @@ export default function Statistics() {
       totalsUse[monthIndex] += t.amount;
     });
 
+    const rotatedTotals = [...totals.slice(startMonth),
+      ...totals.slice(0, startMonth)];
+    const rotatedTotalsUse = [...totalsUse.slice(startMonth),
+      ...totalsUse.slice(0, startMonth)];
+
     return {
-      labels: monthLabels,
+      labels: monthLabels.slice(startMonth ).concat(monthLabels.slice(0, startMonth)),
       data: [{
-        data: totalsUse,
-        color: () => colors.red.default
+        data: rotatedTotalsUse,
+        color: () => colors.red.default,
       },
         {
-          data: totals,
-          color: () => colors.primary.default
+          data: rotatedTotals,
+          color: () => colors.primary.default,
         },
-      ]
+      ],
     };
   },
-    [transactions]);
+    [transactions])
 
 
 

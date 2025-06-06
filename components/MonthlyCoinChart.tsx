@@ -150,8 +150,6 @@ export function MonthlyCoinChart({
             },
             propsForDots: {
               r: "6",
-              strokeWidth: "2",
-              stroke: colors.text
             }
           }}
           bezier

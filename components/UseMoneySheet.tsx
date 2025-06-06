@@ -40,13 +40,23 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
   } = useCoinActions();
 
   const handleUseMoney = async () => {
+    
+    if(amount === null || amount === "") {
+      Toast.show({
+        type: 'warning',
+        text1: 'I miss you 🥺, I mean missing amount!',
+        text2: `Please enter the amount of coins you want to use!`
+      })
+      return;
+    }
+    
     const {
       success, error
     } = await useCoin(amount, note);
 
     if (success) {
       Toast.show({
-        type: 'warning',
+        type: 'success',
         text1: 'Nice! but Not! 😐',
         text2: `You've just wasted ${amount} ${currency} of your coins!`
       })
@@ -57,7 +67,7 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
       Toast.show({
         type: 'error',
         text1: 'Failed to use coin!',
-        text2: `Error Message: ${error}`
+        text2: `${error}`
       })
     }
   }

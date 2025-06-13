@@ -52,7 +52,7 @@ export default {
         },
         card: "#101010",
         cardSecondary: "#171717",
-        border: "#262626",
+        border: "#212121",
         danger: "#ec2d2f",
         text: "#fff",
         textSecondary: "#525252",

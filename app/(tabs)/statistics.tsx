@@ -17,6 +17,9 @@ import {
   DailyCoinChart
 } from "@/components/DailyCoinChart";
 import {
+  StatisticsDetails
+} from "@/components/StatisticsDetails";
+import {
   LineChart,
   BarChart
 } from "react-native-chart-kit";
@@ -43,6 +46,15 @@ import {
 } from "expo-image";
 import noDataSvg from "@/assets/images/No_data-rafiki.svg";
 
+type TransactionType = {
+  id: string;
+  name: string;
+  description: string | null;
+  transaction_type: string;
+  amount: number;
+  created_at: string;
+}
+
 export default function Statistics() {
   const colors = Colors[(useColorScheme() ?? "light")];
   const {
@@ -51,7 +63,7 @@ export default function Statistics() {
     started_at
   } = useCoinStore();
   const [transactions,
-    setTransactions] = useState(null);
+    setTransactions] = useState<TransactionType[] | null>(null);
   const [loading,
     setLoading] = useState(false);
 
@@ -76,7 +88,7 @@ export default function Statistics() {
       50];
 
     const reduced = transactions
-    .filter((transaction) => transaction.transaction_type !== "use")
+    .filter((transaction: TransactionType) => transaction.transaction_type !== "use")
     .reduce((acc, current) => {
       const amountKey = highlightedAmounts.includes(current.amount) ? current.amount: 'Others';
       const existing = acc.find(item => item.amount === amountKey);
@@ -266,6 +278,7 @@ export default function Statistics() {
                   >
                   Statistics
                 </Text>
+                <StatisticsDetails transactions={transactions} />
                 <MostSavedCoinChart chartData={mostSavedCoin} />
                 <DailyCoinChart chartData={dayChartData} />
                 <MonthlyCoinChart chartData={monthChartData} />

@@ -8,7 +8,6 @@ import {
 import Colors from "@/constants/Colors";
 import { TouchableOpacity } from 'react-native'
 import { useCoinStore } from '@/store/useCoinStore'
-import { useSQLiteContext } from "expo-sqlite";
 export function CoinStatus({ onUsePress }: { onUsePress: () => {};}) {
   const colors = Colors[(useColorScheme() ?? "light")];
   const { coins, currency } = useCoinStore();
@@ -32,7 +31,7 @@ export function CoinStatus({ onUsePress }: { onUsePress: () => {};}) {
                         marginTop: 2
                     }}
                 >
-                    Saved Coin
+                    Savings
                 </Text>
                 <Text
                     style={{

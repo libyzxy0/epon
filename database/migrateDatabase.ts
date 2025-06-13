@@ -7,9 +7,6 @@ import {
 import {
   seedCoins
 } from "@/database/seeders";
-import {
-  DATABASE_NAME
-} from "@/database/config";
 
 export const migrateDB = async (db: SQLiteDatabase) => {
   if (db) {

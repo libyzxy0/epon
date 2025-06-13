@@ -14,7 +14,7 @@ import { useState } from 'react'
 
 export function useWishlistActions() {
   const db = useSQLiteContext();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const {
     useCoin
   } = useCoinActions();
@@ -117,7 +117,6 @@ export function useWishlistActions() {
     makeAWish,
     removeWish,
     markAsBought,
-    loading,
-    setLoading
+    loading
   };
 }

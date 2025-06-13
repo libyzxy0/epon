@@ -25,7 +25,8 @@ import {
 } from "react-native-chart-kit";
 import {
   Dimensions,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import {
   SafeAreaView
@@ -229,15 +230,13 @@ export default function Statistics() {
         <View style={ {
           flex: 1,
           alignItems: 'center',
-          marginTop: 120
+          marginTop: 260
         }}>
-          <Image style={ {
-            height: 250,
-            width: 250
-          }} source={noDataSvg} />
+          <ActivityIndicator size="large" color={colors.primary.default} />
 
           <Text style={ {
-            marginTop: 5
+            marginTop: 20,
+            color: colors.textSecondary
           }}>Loading transactions...</Text>
         </View>): (
         <>

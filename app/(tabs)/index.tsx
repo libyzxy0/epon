@@ -54,12 +54,12 @@ export default function Index() {
       <ScrollView
       showsVerticalScrollIndicator={false} 
         style={ {
-          marginTop: 20,
           marginHorizontal: 20,
         }}
         >
         <View transparent style={ {
           marginBottom: 80,
+          marginTop: 20,
         }}>
           <CoinStatus onUsePress={() => moneyBottomSheetRef.current?.expand()} />
           <SaveCoin />

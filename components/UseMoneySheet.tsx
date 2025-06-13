@@ -44,7 +44,7 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
     if(amount === null || amount === "") {
       Toast.show({
         type: 'warning',
-        text1: 'I miss you 🥺, I mean missing amount!',
+        text1: 'Missing amount!',
         text2: `Please enter the amount of coins you want to use!`
       })
       return;
@@ -58,7 +58,7 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
       Toast.show({
         type: 'success',
         text1: 'Nice! but Not! 😐',
-        text2: `You've just wasted ${amount} ${currency} of your coins!`
+        text2: `You've just used ${amount} ${currency} of your coins!`
       })
       ref.current?.close();
       setNote(null);
@@ -151,7 +151,7 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
               borderWidth: 1,
               borderColor: colors.border
             }}
-            placeholder="I will use this money for my chicks (:"
+            placeholder="Buy Load"
             placeholderTextColor={colors.textSecondary}
             />
         </View>

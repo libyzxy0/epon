@@ -75,7 +75,7 @@ export const MakeWishSheet = forwardRef < BottomSheet, any > ((props, ref) => {
       Toast.show({
         type: 'error',
         text1: 'Failed to create wish!',
-        text2: error?.message || "Wag kana mag wish tarantado!"
+        text2: error?.message || "Something went wrong!"
       })
     }
 

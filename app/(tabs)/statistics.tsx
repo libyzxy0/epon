@@ -261,7 +261,7 @@ export default function Statistics() {
           {!loading && transactions && transactions.length > 0 && (
             <ScrollView
               contentContainerStyle={ { flexGrow: 1,
-                paddingBottom: 95 }}
+                paddingBottom: 80 }}
               >
               <View
                 style={ {

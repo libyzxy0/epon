@@ -37,6 +37,7 @@ import { useCoinActions } from "@/hooks/useCoinsActions";
 import {
   useWishlistActions
 } from "@/hooks/useWishlistActions";
+import Toast from 'react-native-toast-message'
 
 export default function Settings() {
   const theme = useColorScheme() ?? "light";
@@ -58,6 +59,11 @@ export default function Settings() {
     setIsDarkMode(previousState => !previousState);
     Storage.setItemSync("apptheme", theme === "dark" ? "light": "dark");
     Appearance.setColorScheme(theme === "dark" ? "light": "dark");
+    Toast.show({
+      type: 'success',
+      text1: 'Theme Changed!',
+      text2: `Your theme is now set to ${theme === "dark" ? "Light Mode": "Dark Mode"}`
+    })
   };
 
   const [deletionModalOpen,
@@ -75,6 +81,11 @@ export default function Settings() {
     );
     await fetchCoins();
     await fetchWishlist();
+    Toast.show({
+      type: 'success',
+      text1: 'Success!',
+      text2: `All of your savings data has been erased!`
+    })
     setDeletionModalOpen(false);
   }
 

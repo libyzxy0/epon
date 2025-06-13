@@ -59,7 +59,7 @@ export function CoinStatus({ onUsePress }: { onUsePress: () => {};}) {
                         style={{
                             fontSize: 12,
                             paddingTop: 1.5,
-                            color: colors.card
+                            color: colors.text
                         }}
                     >
                         Use Coin

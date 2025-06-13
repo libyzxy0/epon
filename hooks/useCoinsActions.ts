@@ -16,6 +16,7 @@ export function useCoinActions() {
 
   const fetchCoins = async () => {
     const coin = await db.getFirstAsync("SELECT * FROM coins;");
+    
     setCoins({
       coins: coin.amount,
       currency: coin.currency,
@@ -46,7 +47,7 @@ export function useCoinActions() {
       try {
         let result = await statement.executeAsync({
           $name: "Save coin",
-          $description: `Saves ${amount}  ${currency} coins.`,
+          $description: `Saves ${amount} ${currency} coins.`,
           $transaction_type: "save",
           $amount: amount,
           $created_at: now()

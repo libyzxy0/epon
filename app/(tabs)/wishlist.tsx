@@ -178,7 +178,7 @@ export default function Wishlist() {
     <SafeAreaView
       style={ {
         flex: 1,
-        backgroundColor: colors.background
+        backgroundColor: colors.background,
       }}
       >
       <AppTitle />
@@ -190,8 +190,7 @@ export default function Wishlist() {
       {!loading && wishes && wishes.length > 0 ? (
         <View
           style={ {
-            marginHorizontal: 20,
-            marginBottom: 120
+            marginHorizontal: 20
           }}
           >
           <FlatList
@@ -237,7 +236,7 @@ export default function Wishlist() {
             contentContainerStyle={ {
               flexDirection: "column",
               gap: 15,
-              paddingBottom: 40
+              paddingBottom: 80 * 2
             }}
             numColumns={1}
             />

@@ -211,10 +211,10 @@ export default function RootLayout() {
               }}
               />
             <Stack.Screen
-              name="debuggingpage"
+              name="backuprestore"
               options={ {
                 headerShown: true,
-                title: "Debug Page (For Dev)",
+                title: "Backup & Restore",
                 animation: "fade",
                 headerStyle: {
                   backgroundColor: colors.background

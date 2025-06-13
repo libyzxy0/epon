@@ -232,39 +232,40 @@ export default function Settings() {
             backgroundColor: colors.card
           }}
           >
-          {/*
+          
           <TouchableOpacity
-            onPress={() => router.push('/debuggingpage')}
+            onPress={() => router.push('/backuprestore')}
             activeOpacity={0.6}
             transparent
             style={ {
               borderBottomWidth: 1,
               borderColor: colors.cardSecondary,
-              paddingVertical: 10,
+              paddingTop: 12,
+              paddingBottom: 16,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between"
             }}
             >
             <Text style={ {
-              color: colors.red.default
-            }}>Don't Open</Text>
+              color: colors.text
+            }}>Backup & Restore</Text>
             <View transparent>
               <Feather
-                name="code"
+                name="chevron-right"
                 size={20}
-                color={colors.red.default}
+                color={colors.textSecondary}
                 />
             </View>
           </TouchableOpacity>
-          */}
+        
           <TouchableOpacity
             onPress={() => setDeletionModalOpen(true)}
             activeOpacity={0.8}
             transparent
             style={ {
-              paddingTop: 10,
-              paddingBottom: 8,
+              paddingBottom: 10,
+              paddingTop: 3,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between"

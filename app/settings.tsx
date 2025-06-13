@@ -170,7 +170,7 @@ export default function Settings() {
             <Text>Help & Support</Text>
             <View transparent>
               <Feather
-                name="heart"
+                name="info"
                 size={20}
                 color={colors.textTertiary}
                 />
@@ -232,6 +232,7 @@ export default function Settings() {
             backgroundColor: colors.card
           }}
           >
+          {/*
           <TouchableOpacity
             onPress={() => router.push('/debuggingpage')}
             activeOpacity={0.6}
@@ -256,12 +257,14 @@ export default function Settings() {
                 />
             </View>
           </TouchableOpacity>
+          */}
           <TouchableOpacity
             onPress={() => setDeletionModalOpen(true)}
             activeOpacity={0.8}
             transparent
             style={ {
-              paddingBottom: 10,
+              paddingTop: 10,
+              paddingBottom: 8,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between"

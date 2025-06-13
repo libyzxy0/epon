@@ -182,21 +182,22 @@ export function SaveCoin() {
             })
             }
             />
-
-          <TouchableOpacity activeOpacity={0.7}
+        </View>
+        <TouchableOpacity activeOpacity={0.7}
             onPress={() =>
             handleSaveMoney( { type: "custom", amount: null })
             }
             style={ {
               borderWidth: 2,
-              borderColor: colors.blue['secondary'],
-              backgroundColor: colors.blue['lowOpacity'],
+              borderColor: colors.
+              border,
+              backgroundColor: colors.cardSecondary,
               flex: 1,
               borderRadius: 9,
               paddingHorizontal: 16,
               paddingVertical: 8,
               margin: 5,
-              marginTop: 10,
+              marginVertical: 10,
               justifyContent: "center",
               alignItems: "center"
             }}
@@ -204,15 +205,15 @@ export function SaveCoin() {
             <Text
               style={ {
                 fontSize: 12,
-                color: colors.blue['default'],
+                color: colors.text,
                 paddingRight: 2,
-                paddingTop: 1.5
+                paddingTop: 1.5,
+                fontFamily: 'PoppinsBold'
               }}
               >
-              Custom Amount
+              Save Coin
             </Text>
           </TouchableOpacity>
-        </View>
       </View>
       <SaveMoneyModal
         visible={coinModal.visisble}

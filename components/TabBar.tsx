@@ -12,7 +12,9 @@ export default function TabBar({ state, descriptors, navigation }) {
   return (
     <View>
       <View
-        style={styles.tabbar}
+        style={[styles.tabbar, {
+          backgroundColor: colors.card + "e6"
+        }]}
       >
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];

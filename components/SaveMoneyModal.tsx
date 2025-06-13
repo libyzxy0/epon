@@ -67,11 +67,11 @@ export function SaveMoneyModal({
                             fontSize: 18,
                             fontFamily: "PoppinsBold",
                             marginBottom: 10,
-                            textAlign: "center",
+                            textAlign: "left",
                             color: colors.text
                         }}
                     >
-                        Save Money
+                        Save A Coin
                     </Text>
 
                     {!isCustom ? (
@@ -80,13 +80,15 @@ export function SaveMoneyModal({
                                 fontSize: 16,
                                 color: colors.textSecondary,
                                 marginBottom: 20,
-                                textAlign: "center"
+                                textAlign: "left",
+                                fontSize: 14
                             }}
                         >
                             {`You are able to save `}
                             <Text
                                 style={{
                                     fontFamily: "PoppinsBold",
+                                    fontSize: 14,
                                     color: colors.primary['default']
                                 }}
                             >{`${amount} coins`}</Text>
@@ -95,13 +97,13 @@ export function SaveMoneyModal({
                     ) : (
                         <Text
                             style={{
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: colors.textSecondary,
                                 marginBottom: 20,
-                                textAlign: "center"
+                                textAlign: "left"
                             }}
                         >
-                            Enter amount of money you want to save for today.
+                            Enter amount of money you want to save.
                         </Text>
                     )}
                     {isCustom && (

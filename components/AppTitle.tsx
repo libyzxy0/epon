@@ -14,9 +14,9 @@ export default function AppTitle() {
         <View
             style={{
                 zIndex: 10,
-                backgroundColor: colors.background,
+                backgroundColor: colors.backgroundColor,
                 paddingHorizontal: 25,
-                paddingTop: 20,
+                paddingTop: 10,
                 paddingBottom: 10,
                 width: "100%",
                 flexDirection: "row",

@@ -1,5 +1,7 @@
-export const migrations = {
-  create_coin_table: `
+export const migrations = [
+  {
+    description: "Create coins table",
+    sql: `
     CREATE TABLE IF NOT EXISTS coins (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       amount INTEGER NOT NULL,
@@ -8,8 +10,11 @@ export const migrations = {
       started_at TEXT NOT NULL,
       last_update TEXT NOT NULL
     );
-  `,
-  create_transactions_table: `
+    `
+  },
+  {
+    description: 'Create transactions table',
+    sql: `
     CREATE TABLE IF NOT EXISTS transactions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -18,8 +23,10 @@ export const migrations = {
       amount INTEGER NOT NULL,
       created_at TEXT NOT NULL
     );
-  `,
-  create_wishlist_table: `
+    `
+  }, {
+    description: 'Create wishlist table',
+    sql: `
     CREATE TABLE IF NOT EXISTS wishlist (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -28,5 +35,6 @@ export const migrations = {
       price INTEGER NOT NULL,
       created_at TEXT NOT NULL
     );
-  `,
-};
+    `
+  }
+]

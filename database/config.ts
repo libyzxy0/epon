@@ -1,1 +1,1 @@
-export const DATABASE_NAME: string = 'iloveurenelyn.db';
+export const DATABASE_NAME: string = 'iloveurenelyn.db'; // Ang mag screenshot panget!!

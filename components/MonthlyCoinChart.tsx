@@ -142,7 +142,7 @@ export function MonthlyCoinChart({
             backgroundGradientTo: colors.cardSecondary,
             decimalPlaces: 2,
             color: (opacity = 1) =>
-            colors.text,
+            colors.blue.default,
             labelColor: (opacity = 1) =>
             colors.text,
             style: {

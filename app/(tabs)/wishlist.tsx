@@ -86,8 +86,7 @@ export default function Wishlist() {
     fetchWishlist,
     markAsBought,
     removeWish,
-    loading,
-    setLoading
+    loading
   } = useWishlistActions();
   const {
     wishlist
@@ -95,16 +94,6 @@ export default function Wishlist() {
   useEffect(() => {
     fetchWishlist();
   }, []);
-  const [refreshing,
-    setRefreshing] = useState(false);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    setLoading(true);
-    fetchWishlist();
-    setRefreshing(false);
-    setLoading(false);
-  }, [fetchWishlist]);
 
   const [wishes,
     setWishes] = useState < WishlistType > ([]);
@@ -195,14 +184,6 @@ export default function Wishlist() {
           >
           <FlatList
             data={wishes}
-            refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={[colors.primary.default]}
-              tintColor={colors.primary.default}
-              />
-            }
             ListHeaderComponent={
             <Text
               style={ {

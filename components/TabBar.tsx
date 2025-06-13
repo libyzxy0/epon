@@ -4,16 +4,21 @@ import { View, Text, Button } from "@/components/Themed";
 import TabButton from "@/components/TabButton";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 
 export default function TabBar({ state, descriptors, navigation }) {
   const theme = useColorScheme() ?? "light";
   const colors = Colors[theme];
+  const insets = useSafeAreaInsets();
 
   return (
-    <View>
       <View
         style={[styles.tabbar, {
-          backgroundColor: colors.card + "e6"
+          backgroundColor: colors.card + "e6",
+          paddingBottom: insets.bottom + 10,
         }]}
       >
         {state.routes.map((route, index) => {
@@ -39,7 +44,6 @@ export default function TabBar({ state, descriptors, navigation }) {
           );
         })}
       </View>
-    </View>
   );
 };
 

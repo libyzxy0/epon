@@ -95,7 +95,7 @@ export function StatisticsDetails({
         >
             <MiniCardCutie
                 label="Current Savings"
-                value={`${coins} ${currency}`}
+                value={`${coins.toLocaleString('en-US')} ${currency}`}
                 color={colors.yellow.default}
             />
             <MiniCardCutie
@@ -105,12 +105,12 @@ export function StatisticsDetails({
             />
             <MiniCardCutie
                 label="Highest Savings"
-                value={`${savedCoins} ${currency}`}
+                value={`${savedCoins.toLocaleString('en-US')} ${currency}`}
                 color={colors.primary.default}
             />
             <MiniCardCutie
                 label="Used Coins"
-                value={`${usedCoins} ${currency}`}
+                value={`${usedCoins.toLocaleString('en-US')} ${currency}`}
                 color={colors.red.default}
             />
         </View>

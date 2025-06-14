@@ -63,10 +63,13 @@ export function WishlistCard({
           }}
           >
           <Text
+            numberOfLines={1}
+            ellipesizeMode="tail"
             style={ {
               color: is_bought ? colors.textSecondary: colors[color]['default'],
               fontFamily: "PoppinsBold",
-              fontSize: 16
+              fontSize: 16,
+              maxWidth: '70%'
             }}
             >
             {name}
@@ -106,6 +109,8 @@ export function WishlistCard({
 
         </View>
         <Text
+        numberOfLines={4}
+                ellipesizeMode="tail"
           style={ {
             color: colors.textSecondary,
             marginVertical: 7

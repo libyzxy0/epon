@@ -33,7 +33,8 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
   const [amount, setAmount] = useState(null);
   const [note, setNote] = useState(null);
   const {
-    currency
+    currency,
+    coins
   } = useCoinStore();
   const {
     useCoin
@@ -98,15 +99,23 @@ export const UseMoneySheet = forwardRef < BottomSheet, any > ((props, ref) => {
             gap: 5,
           }}
           >
-          <Text
+          <View
+          transparent
             style={ {
-              color: colors.textSecondary,
-              fontSize: 12,
-              paddingLeft: 2
+              paddingLeft: 2,
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-between'
             }}
             >
-            Amount
-          </Text>
+            <Text style={{
+              color: colors.textSecondary,
+              fontSize: 12,
+            }}>Amount</Text>
+            {amount && (
+              <Text style={{ fontSize: 10, fontFamily: 'PoppinsItalic', color: Math.round(Math.min((amount / coins) * 100)) <= 100 ? colors.yellow.default : colors.red.default }}>{Math.round(Math.min((amount / coins) * 100)) <= 100 ? `Your savings will be reduced by ${Math.round(Math.min((amount / coins) * 100, 100))}%` : 'Insufficient coins.'}</Text>
+            )}
+          </View>
           <BottomSheetTextInput
             onChangeText={setAmount}
             defaultValue={amount}

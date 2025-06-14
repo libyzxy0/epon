@@ -56,7 +56,6 @@ export default function Transactions() {
     setLoading] = useState(true);
   const [refreshing,
     setRefreshing] = useState(false);
-  const router = useRouter();
 
   const loadTransactions = useCallback(async () => {
     try {
@@ -212,23 +211,9 @@ export default function Transactions() {
       <SafeAreaView style={ {
         flex: 1,
         backgroundColor: colors.background
-      }}><View style={ {
-          paddingHorizontal: 15,
-          paddingVertical: 30,
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 8
-        }}>
-        <TouchableOpacity onPress={() => router.navigate('/')} activeOpacity={0.7}>
-          <Feather name="chevron-left" size={30} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={ {
-          fontFamily: 'PoppinsBold',
-          fontSize: 22,
-          marginTop: 4,
-          color: colors.text
-        }}>All Transactions</Text>
-      </View>
+      }}>
+      
+      <PageTitleText />
 
         <View style={ {
           flex: 1,
@@ -246,23 +231,7 @@ export default function Transactions() {
       flex: 1,
       backgroundColor: colors.background
     }}>
-      <View style={ {
-        paddingHorizontal: 15,
-        paddingVertical: 30,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8
-      }}>
-        <TouchableOpacity onPress={() => router.navigate('/')} activeOpacity={0.7}>
-          <Feather name="chevron-left" size={30} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={ {
-          fontFamily: 'PoppinsBold',
-          fontSize: 22,
-          marginTop: 4,
-          color: colors.text
-        }}>All Transactions</Text>
-      </View>
+      <PageTitleText />
 
       <FlatList
         data={transactions}
@@ -287,4 +256,34 @@ export default function Transactions() {
         />
     </SafeAreaView>
   );
+}
+
+function PageTitleText() {
+  const router = useRouter();
+  const theme = useColorScheme() ?? "light";
+  const colors = Colors[theme];
+  return (
+    <View style={ {
+        paddingHorizontal: 15,
+        paddingVertical: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14
+      }}>
+        <TouchableOpacity style={{
+          backgroundColor: colors.card,
+          paddingHorizontal: 4,
+          paddingVertical: 5,
+          borderRadius: 50
+        }} onPress={() => router.navigate('/')} activeOpacity={0.7}>
+          <Feather style={{paddingRight: 3}} name="chevron-left" size={24} color={colors.text} />
+        </TouchableOpacity>
+        <Text style={ {
+          fontFamily: 'PoppinsBold',
+          fontSize: 20,
+          marginTop: 4,
+          color: colors.text,
+        }}>All Transactions</Text>
+      </View>
+  )
 }

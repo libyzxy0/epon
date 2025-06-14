@@ -131,26 +131,7 @@ export default function Wishlist() {
         >
             <AppTitle />
             {loading ? (
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: "center",
-                        marginTop: 260
-                    }}
-                >
-                    <ActivityIndicator
-                        size="large"
-                        color={colors.primary.default}
-                    />
-                    <Text
-                        style={{
-                            marginTop: 20,
-                            color: colors.textSecondary
-                        }}
-                    >
-                        Loading wishlist...
-                    </Text>
-                </View>
+                <LoadingWishlist />
             ) : (
                 <>
                     {wishes && wishes.length > 0 ? (
@@ -200,46 +181,7 @@ export default function Wishlist() {
                             />
                         </View>
                     ) : (
-                        <View
-                            style={{
-                                flex: 1,
-                                alignItems: "center",
-                                marginTop: 120
-                            }}
-                        >
-                            <Image
-                                style={{
-                                    height: 250,
-                                    width: 250
-                                }}
-                                source={wishSvg}
-                            />
-
-                            <Text
-                                style={{
-                                    marginTop: 5
-                                }}
-                            >
-                                You don't have any wishes yet.
-                            </Text>
-                            <Text
-                                style={{
-                                    color: colors.textSecondary,
-                                    fontFamily: "PoppinsItalic"
-                                }}
-                            >
-                                Tap plus{" "}
-                                <Text
-                                    style={{
-                                        color: colors.primary.default,
-                                        fontFamily: "PoppinsBold"
-                                    }}
-                                >
-                                    (+)
-                                </Text>{" "}
-                                to create a new wish.
-                            </Text>
-                        </View>
+                        <EmptyWishlistError />
                     )}
                 </>
             )}
@@ -266,5 +208,74 @@ export default function Wishlist() {
 
             <MakeWishSheet ref={bottomSheetRef} />
         </SafeAreaView>
+    );
+}
+
+function LoadingWishlist() {
+    const colors = Colors[useColorScheme() ?? "light"];
+    return (
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                marginTop: 260
+            }}
+        >
+            <ActivityIndicator size="large" color={colors.primary.default} />
+            <Text
+                style={{
+                    marginTop: 20,
+                    color: colors.textSecondary
+                }}
+            >
+                Loading wishlist...
+            </Text>
+        </View>
+    );
+}
+
+function EmptyWishlistError() {
+    const colors = Colors[useColorScheme() ?? "light"];
+    return (
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                marginTop: 120
+            }}
+        >
+            <Image
+                style={{
+                    height: 250,
+                    width: 250
+                }}
+                source={wishSvg}
+            />
+
+            <Text
+                style={{
+                    marginTop: 5
+                }}
+            >
+                You don't have any wishes yet.
+            </Text>
+            <Text
+                style={{
+                    color: colors.textSecondary,
+                    fontFamily: "PoppinsItalic"
+                }}
+            >
+                Tap plus{" "}
+                <Text
+                    style={{
+                        color: colors.primary.default,
+                        fontFamily: "PoppinsBold"
+                    }}
+                >
+                    (+)
+                </Text>{" "}
+                to create a new wish.
+            </Text>
+        </View>
     );
 }

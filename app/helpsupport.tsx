@@ -427,7 +427,7 @@ function Feedback() {
             icon: "bulb",
             action: () => {
                 Linking.openURL(
-                    "https://github.com/libyzxy0/epon"
+                    "https://github.com/libyzxy0/epon/pulls"
                 );
             }
         }

@@ -233,6 +233,16 @@ export default function RootLayout() {
                 headerShown: false
               }}
               />
+            <Stack.Screen
+              name="helpsupport"options={ {
+                headerShown: true,
+                title: "Help & Support",
+                animation: "fade",
+                headerStyle: {
+                  backgroundColor: colors.background
+                }
+              }}
+              />
           </Stack>
           <Toast
             position='top'

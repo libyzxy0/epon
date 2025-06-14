@@ -156,7 +156,7 @@ export default function Settings() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={0.6}
+          <TouchableOpacity onPress={() => router.push("/helpsupport")} activeOpacity={0.6}
             transparent
             style={ {
               borderBottomWidth: 1,

@@ -146,9 +146,9 @@ export default function Wishlist() {
                                     <Text
                                         style={{
                                             fontFamily: "PoppinsBold",
-                                            fontSize: 23,
+                                            fontSize: 22,
                                             marginLeft: 5,
-                                            marginTop: 20
+                                            marginTop: 10
                                         }}
                                     >
                                         My Wishes

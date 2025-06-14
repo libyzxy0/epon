@@ -236,7 +236,7 @@ export default function Statistics() {
                         >
                             <View
                                 style={{
-                                    marginTop: 20,
+                                    marginTop: 10,
                                     marginHorizontal: 20
                                 }}
                             >
@@ -261,7 +261,7 @@ function PageTitleText() {
         <Text
             style={{
                 fontFamily: "PoppinsBold",
-                fontSize: 23,
+                fontSize: 22,
                 marginLeft: 5
             }}
         >

@@ -34,24 +34,31 @@ export function CoinStatus({ onUsePress }: { onUsePress: () => {};}) {
                     Savings
                 </Text>
                 <Text
+                numberOfLines={1}
+                ellipesizeMode="tail"
                     style={{
                         fontFamily: "PoppinsBold",
                         fontSize: 20,
-                        color: colors.primary['default']
+                        color: colors.primary['default'],
+                        paddingRight: 80
                     }}
                 >
                     {coins !== null ? `${currency} ${coins.toLocaleString('en-US')}` : "Loading..."}
                 </Text>
             </View>
 
-            <View transparent>
+            <View transparent style={{
+              position: 'absolute',
+              right: 15
+            }}>
                 <TouchableOpacity activeOpacity={0.7}
                     onPress={onUsePress}
                     style={{
                         backgroundColor: colors.primary['default'],
                         paddingHorizontal: 12,
                         paddingVertical: 4,
-                        borderRadius: 50
+                        borderRadius: 50,
+                        
                     }}
                 >
                     <Text
